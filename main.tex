@@ -1,0 +1,360 @@
+\pdfminorversion=6
+\ifx\fhformat\undefined\def\fhformat{}\fi
+\documentclass[\fhformat,10pt]{style/fh-ooe}
+
+\begin{document}
+
+% 1: title page generated automatically by fh-ooe.cls
+
+\begin{frame}{Leitfrage des Vortrags}
+\Large
+\begin{center}
+\textbf{Wie wird aus einem persönlichen KI-Coding-Assistenten\\
+\color{fh-ooe-red}ein gemeinsamer, kontrollierbarer Arbeitsraum für Lehre?}
+\end{center}
+\vspace{0.5em}
+\normalsize
+\begin{columns}[T]
+\column{0.32\textwidth}
+\begin{block}{Nicht der Fokus}
+Noch einmal erklären, dass KI Code erzeugen kann.
+\end{block}
+\column{0.32\textwidth}
+\begin{block}{Der Fokus}
+Engineering-Prozesse explizit machen: Kontext, Rollen, Aktionen, Review.
+\end{block}
+\column{0.32\textwidth}
+\begin{block}{Die Erweiterung}
+Mehrere Personen arbeiten am selben oder an getrennten KI-Arbeitskontexten.
+\end{block}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Vom Chatfenster zum Engineering-System}
+\begin{center}
+\begin{tikzpicture}[node distance=1.25cm,>=Latex, every node/.style={font=\small}]
+\node[draw,rounded corners,fill=dachslight,minimum width=3.2cm,minimum height=1cm] (prompt) {Prompt / Antwort};
+\node[draw,rounded corners,fill=dachslight,minimum width=3.2cm,minimum height=1cm,right=2.0cm of prompt] (workspace) {Engineering-Workspace};
+\draw[-{Latex[length=3mm]},very thick,fh-ooe-red] (prompt) -- node[above]{explizit machen} (workspace);
+\node[below=0.45cm of prompt,align=center,text=dachsgray] {individuell\\kurzlebig\\UI-zentriert};
+\node[below=0.45cm of workspace,align=center] {Threads und Turns\\Tools und Ausführung\\Historie und Rollen\\mehrere Frontends};
+\end{tikzpicture}
+\end{center}
+\vspace{0.8em}
+\begin{alertblock}{These}
+Für die Lehre ist nicht nur die Qualität der KI-Antwort interessant, sondern die \textbf{Struktur des gemeinsamen Arbeitsprozesses}.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Systemarchitektur: dünne Schichten, klare Autorität}
+\centering
+\begin{tikzpicture}[
+  box/.style={draw,rounded corners,minimum width=3.3cm,minimum height=0.9cm,align=center,fill=dachslight},
+  smallbox/.style={draw,rounded corners,minimum width=2.65cm,minimum height=0.8cm,align=center,fill=white},
+  arr/.style={-{Latex[length=2.5mm]},thick},
+  node distance=0.65cm and 0.8cm,
+  font=\small]
+\node[smallbox] (native) {CodexUI\\Qt 6 / nativ};
+\node[smallbox,right=of native] (web) {CodexWebUI\\Browser};
+\node[smallbox,right=of web] (other) {weitere Clients\\SNode.C / TS};
+\node[box,below=0.85cm of web,minimum width=7.3cm] (bridge) {AISuite / \texttt{codex-bridge}\\Transport, Routing, Controller/Observer};
+\node[box,below=0.75cm of bridge,minimum width=5.0cm] (server) {OpenAI Codex app-server\\semantische Autorität};
+\node[box,below=0.75cm of server,minimum width=3.3cm,fill=fh-ooe-red!8] (codex) {Codex};
+\draw[arr] (native) -- (bridge);
+\draw[arr] (web) -- (bridge);
+\draw[arr] (other) -- (bridge);
+\draw[arr,<->] (bridge) -- node[right]{natives JSON-RPC} (server);
+\draw[arr,<->] (server) -- (codex);
+\node[draw,dashed,rounded corners,fit=(native)(web)(other)(bridge),inner sep=0.28cm,label={[font=\scriptsize]left:SNode.C-basierte Integrationsseite}] {};
+\end{tikzpicture}
+\smallsource{AISuite: stateless multi-client bridge; app-server bleibt Autorität für Threads, Turns und Items.}
+\end{frame}
+
+\begin{frame}{Warum diese Architektur Kollaboration ermöglicht}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{block}{Ein app-server-Kontext}
+\begin{itemize}
+  \item genau eine Provider-Session pro Bridge
+  \item mehrere Frontend-Verbindungen
+  \item Notifications werden an alle verbundenen Frontends verteilt
+  \item keine zweite semantische Kopie im Backend
+\end{itemize}
+\end{block}
+\column{0.48\textwidth}
+\begin{block}{Explizite Rollen}
+\begin{itemize}
+  \item ein \key{Controller}
+  \item weitere Clients als \key{Observer}
+  \item Kontrollübergabe explizit
+  \item kein stilles ``irgendwer übernimmt'' beim Disconnect
+\end{itemize}
+\end{block}
+\end{columns}
+\vspace{0.5em}
+\begin{alertblock}{Für die Lehre interessant}
+\textbf{Beobachten, erklären, übernehmen, zurückgeben} werden zu technisch abbildbaren Rollenwechseln -- nicht nur zu sozialen Absprachen neben einem Einzelplatz-Tool.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{CodexUI und CodexWebUI: zwei Zugänge, ein Verhalten}
+\begin{center}
+\begin{tikzpicture}[font=\small,>=Latex]
+\node[draw,rounded corners,fill=dachslight,minimum width=3.7cm,minimum height=1.1cm,align=center] (qt) at (-3.4,0) {CodexUI\\Native Qt 6};
+\node[draw,rounded corners,fill=dachslight,minimum width=3.7cm,minimum height=1.1cm,align=center] (web) at (3.4,0) {CodexWebUI\\Browser};
+\node[draw,rounded corners,fill=fh-ooe-red!8,minimum width=4.4cm,minimum height=1.0cm,align=center] (bridge) at (0,-2) {codex-bridge};
+\draw[<->,thick] (qt) -- (bridge);
+\draw[<->,thick] (web) -- (bridge);
+\node[align=center,text=dachsgray] at (0,0.35) {gleiche app-server-Semantik\\kein zusätzlicher Backend-State};
+\end{tikzpicture}
+\end{center}
+\begin{itemize}
+  \item Lehrender kann ohne lokale Qt-Installation über den Browser dazukommen.
+  \item Studierende können nativ arbeiten, ohne einen eigenen Web-Backend-Stack betreiben zu müssen.
+  \item Native und Web sind \textbf{Präsentationsformen desselben Codex-Arbeitsmodells}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Kollaboration als didaktischer Baustein}
+\centering
+\begin{tikzpicture}[
+ person/.style={draw,circle,minimum size=0.95cm,fill=white},
+ work/.style={draw,rounded corners,minimum width=3.5cm,minimum height=1.0cm,fill=dachslight,align=center},
+ >=Latex,font=\small]
+\node[person] (teacher) at (-4,1.6) {L};
+\node[person] (s1) at (-4,0) {S1};
+\node[person] (s2) at (-4,-1.6) {S2};
+\node[work] (ws) at (0,0) {gemeinsamer\\Codex-Arbeitskontext};
+\node[work,fill=fh-ooe-red!8] (ai) at (4,0) {app-server\\+ Codex};
+\draw[<->,thick] (teacher) -- node[above,sloped]{beobachten / steuern} (ws);
+\draw[<->,thick] (s1) -- (ws);
+\draw[<->,thick] (s2) -- (ws);
+\draw[<->,very thick,fh-ooe-red] (ws) -- (ai);
+\end{tikzpicture}
+\vspace{0.6em}
+\begin{block}{Entscheidend}
+Der gemeinsame Gegenstand ist nicht nur der Quellcode im Repository, sondern auch der \textbf{laufende KI-gestützte Engineering-Kontext}: was analysiert wurde, welche Aktion läuft und wer gerade steuern darf.
+\end{block}
+\end{frame}
+
+\begin{frame}{Szenario A: Gemeinsames Debugging im Labor}
+\begin{columns}[T]
+\column{0.54\textwidth}
+\centering
+\begin{tikzpicture}[font=\scriptsize,>=Latex]
+\node[draw,circle] (l) at (0,2.0) {L};
+\node[draw,circle] (s1) at (-2.1,0.8) {S1};
+\node[draw,circle] (s2) at (0,0.8) {S2};
+\node[draw,circle] (s3) at (2.1,0.8) {S3};
+\node[draw,rounded corners,fill=dachslight,minimum width=4.0cm,minimum height=0.9cm,align=center] (b) at (0,-0.6) {ein codex-bridge\\ein app-server};
+\node[draw,rounded corners,fill=fh-ooe-red!8,minimum width=2.6cm,minimum height=0.8cm] (c) at (0,-2.0) {Codex};
+\foreach \x in {l,s1,s2,s3} \draw[<->] (\x) -- (b);
+\draw[<->,thick] (b) -- (c);
+\end{tikzpicture}
+\column{0.44\textwidth}
+\begin{block}{Ablauf}
+\begin{enumerate}
+  \item Student erklärt Hypothese.
+  \item Gruppe beobachtet Analyse/Tools.
+  \item Controller wird gezielt übergeben.
+  \item anderer Student testet Gegenhypothese.
+  \item Lehrender greift nur bei Bedarf ein.
+\end{enumerate}
+\end{block}
+\end{columns}
+\begin{alertblock}{Mehrwert}
+Eine KI-Session wird zum \textbf{gemeinsamen Whiteboard für Software Engineering} -- aber mit realem Code, Tools und Tests.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Szenario B: Individuelle Arbeitsräume, gezielte Betreuung}
+\centering
+\begin{tikzpicture}[font=\scriptsize,>=Latex,
+  pod/.style={draw,rounded corners,fill=dachslight,minimum width=2.4cm,minimum height=1.2cm,align=center}]
+\node[draw,circle,fill=white] (l) at (0,2.6) {L};
+\node[pod] (p1) at (-4,0) {S1\\bridge + app-server};
+\node[pod] (p2) at (0,0) {S2\\bridge + app-server};
+\node[pod] (p3) at (4,0) {S3\\bridge + app-server};
+\node[below=0.35cm of p1] {eigener Thread-/Tool-Kontext};
+\node[below=0.35cm of p2] {eigener Thread-/Tool-Kontext};
+\node[below=0.35cm of p3] {eigener Thread-/Tool-Kontext};
+\draw[<->,thick] (l) -- node[left]{bei Bedarf} (p1);
+\draw[<->,thick,fh-ooe-red] (l) -- node[right]{aktuelle Betreuung} (p2);
+\draw[<->,thick] (l) -- node[right]{bei Bedarf} (p3);
+\end{tikzpicture}
+\vspace{0.7em}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\key{Student bleibt Eigentümer seines Arbeitsraums}
+\column{0.48\textwidth}
+\key{Lehrender kann gezielt als Observer/Controller dazukommen}
+\end{columns}
+\vspace{0.5em}
+Ideal für Praktika: Hilfe ohne Bildschirm- oder Sitzplatzwechsel; Webzugang senkt die Eintrittshürde.
+\end{frame}
+
+\begin{frame}{Szenario C: Rollenwechsel und Peer Review}
+\centering
+\begin{tikzpicture}[font=\small,>=Latex]
+\node[draw,rounded corners,fill=dachslight,minimum width=2.6cm,minimum height=0.9cm] (a) at (-4,1.2) {Student A};
+\node[draw,rounded corners,fill=dachslight,minimum width=2.6cm,minimum height=0.9cm] (b) at (-4,-1.2) {Student B};
+\node[draw,rounded corners,fill=white,minimum width=3.2cm,minimum height=1.0cm,align=center] (w) at (0,0) {gemeinsamer Thread\\+ Repository};
+\node[draw,rounded corners,fill=fh-ooe-red!8,minimum width=2.8cm,minimum height=0.9cm] (ai) at (4,0) {Codex};
+\draw[->,thick] (a) -- node[above,sloped]{1. analysiert / implementiert} (w);
+\draw[->,thick] (w) -- (ai);
+\draw[->,thick] (ai) to[bend left=15] (w);
+\draw[->,thick,fh-ooe-red] (b) -- node[below,sloped]{2. übernimmt / reviewt} (w);
+\draw[->,dashed,thick] (a) to[bend left=25] node[left]{3. begründet} (b);
+\end{tikzpicture}
+\vspace{0.7em}
+\begin{block}{Lehrmuster}
+\textbf{Implementierer → Reviewer → Entscheider} als expliziter Rollenwechsel. Die KI bleibt gleich, aber Auftrag, Controller und Perspektive ändern sich.
+\end{block}
+\end{frame}
+
+\begin{frame}{Lehrmuster statt ``Prompt Engineering''}
+\begin{center}
+\begin{tikzpicture}[font=\small,>=Latex,node distance=0.45cm]
+\tikzset{phase/.style={draw,rounded corners,minimum width=2.15cm,minimum height=0.75cm,fill=dachslight,align=center}}
+\node[phase] (p1) {Verstehen};
+\node[phase,right=of p1] (p2) {Hypothese};
+\node[phase,right=of p2] (p3) {Änderung};
+\node[phase,right=of p3] (p4) {Test};
+\node[phase,right=of p4] (p5) {Review};
+\foreach \a/\b in {p1/p2,p2/p3,p3/p4,p4/p5} \draw[->,thick] (\a) -- (\b);
+\end{tikzpicture}
+\end{center}
+\vspace{0.6em}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{block}{Technisch erzwingbar / sichtbar}
+\begin{itemize}
+  \item eigener Turn pro Phase
+  \item ``nichts ändern'' vs. Tool-Nutzung
+  \item separater Review-Thread
+  \item Controller-Wechsel
+\end{itemize}
+\end{block}
+\column{0.48\textwidth}
+\begin{block}{Didaktisch beobachtbar}
+\begin{itemize}
+  \item Hypothesenqualität
+  \item Umgang mit Gegenargumenten
+  \item Teststrategie
+  \item begründete Annahme/Ablehnung von KI-Vorschlägen
+\end{itemize}
+\end{block}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Betreuung und Bewertung: Prozess als zusätzliches Artefakt}
+\begin{alertblock}{Nicht: ``Wir loggen alles und benoten den Prompt.''}
+Der Nutzen liegt darin, \textbf{Engineering-Entscheidungen in ihrem Kontext diskutierbar} zu machen.
+\end{alertblock}
+\vspace{0.4em}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\key{Für Betreuung}
+\begin{itemize}
+  \item Wo hängt der Student tatsächlich?
+  \item Welche Hypothese wurde schon geprüft?
+  \item Was hat die KI verändert oder ausgeführt?
+  \item Kann ich zunächst nur beobachten?
+\end{itemize}
+\column{0.48\textwidth}
+\key{Für Reflexion / Prüfung}
+\begin{itemize}
+  \item Warum wurde dieser Vorschlag akzeptiert?
+  \item Welche Alternative wurde verworfen?
+  \item Welche Tests sichern die Änderung ab?
+  \item Kann der Student die Lösung ohne KI erklären?
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Topologien für Lehrveranstaltungen}
+\small
+\begin{tabularx}{\textwidth}{>{\bfseries}l X X X}
+\toprule
+ & Arbeitskontext & Zugriff Lehrender & Geeignet für \\
+\midrule
+Gemeinsame Session & ein app-server / Bridge & dauerhaft Observer, gezielte Kontrolle & Demo, Debugging, Gruppenarbeit \\
+\addlinespace
+Individuelle Session & je Student eigener app-server / Bridge & on demand via Web oder nativ & Praktika, individuelle Betreuung \\
+\addlinespace
+Peer-Session & geteilter Kontext, expliziter Controller-Wechsel & optional Observer & Pair Programming, Review, Prüfungsgespräch \\
+\bottomrule
+\end{tabularx}
+\vspace{0.8em}
+\begin{block}{Technische Konsequenz}
+Die Kollaborationsform wird durch \textbf{Deployment-Topologie + Rollenpolitik} definiert -- nicht durch eine neue Variante der KI.
+\end{block}
+\end{frame}
+
+\begin{frame}{Was noch offen ist}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{block}{Technisch}
+\begin{itemize}
+  \item Identität und Authentisierung bei Netzbetrieb
+  \item feinere Rollen als Controller/Observer?
+  \item Session Discovery im Labor
+  \item Rechte auf Tools / Dateien / Shell
+\end{itemize}
+\end{block}
+\column{0.48\textwidth}
+\begin{block}{Didaktisch}
+\begin{itemize}
+  \item Welche Kollaborationsform verbessert Lernen messbar?
+  \item Wann wird Beobachtung zu Überbetreuung?
+  \item Welche Prozessdaten sind sinnvoll -- welche nicht?
+  \item Wie verändert sich Prüfungsdesign?
+\end{itemize}
+\end{block}
+\end{columns}
+\vspace{0.5em}
+\centering
+\large \textbf{Das System ist Infrastruktur für diese Experimente -- nicht die didaktische Antwort selbst.}
+\end{frame}
+
+\begin{frame}{Live: ein Arbeitskontext, mehrere Rollen}
+\Large
+\begin{center}
+\textbf{ca. 8--9 Minuten}
+\end{center}
+\normalsize
+\begin{enumerate}
+  \item CodexUI: bestehendes Projekt / Thread öffnen.
+  \item Codex analysiert eine konkrete Aufgabe -- zunächst ohne Änderung.
+  \item Änderung + Build/Test ausführen.
+  \item Zweiter Client über CodexWebUI verbindet sich als Observer.
+  \item Kontrolle übergeben: Review / Gegenprobe aus zweiter Perspektive.
+  \item Zurückgeben und Ergebnis gemeinsam bewerten.
+\end{enumerate}
+\vspace{0.5em}
+\begin{alertblock}{Die Demo soll genau eine Sache beweisen}
+\textbf{Der KI-gestützte Engineering-Prozess kann geteilt und die aktive Rolle kontrolliert übergeben werden.}
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Fazit}
+\begin{center}
+\Large
+\textbf{Nicht noch ein KI-Frontend.}
+\vspace{0.7em}
+
+\color{fh-ooe-red}\textbf{Ein experimenteller kollaborativer Engineering-Workspace für Lehre.}
+\end{center}
+\vspace{0.9em}
+\normalsize
+\begin{itemize}
+  \item app-server bleibt semantische Autorität; AISuite macht ihn netzwerkfähig und mehrbenutzerfähig.
+  \item CodexUI und CodexWebUI eröffnen native und browserbasierte Zugänge zum selben Arbeitsmodell.
+  \item Controller/Observer und getrennte Topologien ermöglichen neue Formen von Betreuung, Gruppenarbeit und Review.
+\end{itemize}
+\vfill
+\centering
+\textbf{Die spannende Frage für die Lehre ist nicht, was die KI kann -- sondern wie wir gemeinsam mit ihr arbeiten.}
+\end{frame}
+
+\end{document}
