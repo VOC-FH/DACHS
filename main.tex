@@ -29,7 +29,7 @@
   \item Ich verwende weder VS Code noch JetBrains.
 \end{itemize}
 \end{block}
-\vspace{0.4em}
+\vspace{0.25em}
 \begin{alertblock}{Anforderung}
 Repository, Compiler, Buildsystem, Tests, Git und Tools sollen \textbf{auf meiner Maschine} bleiben.
 \end{alertblock}
@@ -39,6 +39,7 @@ Repository, Compiler, Buildsystem, Tests, Git und Tools sollen \textbf{auf meine
 % -----------------------------------------------------------------------------
 % 3
 \begin{frame}{SNode.C in 60 Sekunden}
+\small
 \begin{columns}[T]
 \column{0.48\textwidth}
 \begin{block}{General-Purpose Netzwerkframework}
@@ -64,7 +65,7 @@ HTTP/HTTPS, WebSocket/WSS, MQTT und MQTT über WebSocket -- auf einem gemeinsame
 C++-API, Kommandozeile und Konfigurationsdateien greifen auf dasselbe Instanz-/Section-Modell zu.
 \end{block}
 \end{columns}
-\vspace{0.35em}
+\vspace{0.15em}
 \begin{alertblock}{Für diesen Vortrag wichtig}
 SNode.C liefert nicht die KI-Funktionalität, sondern die \textbf{Netzwerk-, Transport- und Konfigurationsbasis}, auf der AISuite aufbaut.
 \end{alertblock}
@@ -94,10 +95,10 @@ SNode.C liefert nicht die KI-Funktionalität, sondern die \textbf{Netzwerk-, Tra
 \end{itemize}
 \end{block}
 \end{columns}
-\vspace{0.8em}
+\vspace{0.55em}
 \begin{center}
 \Large
-\textbf{Ich möchte nicht mein Projekt zu Codex bringen.}\\[0.3em]
+\textbf{Ich möchte nicht mein Projekt zu Codex bringen.}\\[0.25em]
 \color{fh-ooe-red}\textbf{Ich möchte Codex zu meinem Projekt bringen.}
 \end{center}
 \end{frame}
@@ -106,22 +107,25 @@ SNode.C liefert nicht die KI-Funktionalität, sondern die \textbf{Netzwerk-, Tra
 % 5
 \begin{frame}{Die CLI löst fast genau dieses Problem}
 \begin{columns}[T]
-\column{0.53\textwidth}
+\column{0.52\textwidth}
 \centering
 \begin{tikzpicture}[font=\small,>=Latex]
-\node[draw,rounded corners,fill=fh-ooe-red!8,minimum width=2.8cm,minimum height=0.9cm] (cli) {Codex CLI};
-\node[draw,rounded corners,fill=dachslight,below left=1.1cm and 0.2cm of cli] (src) {Source};
-\node[draw,rounded corners,fill=dachslight,below=1.1cm of cli] (build) {Build};
-\node[draw,rounded corners,fill=dachslight,below right=1.1cm and 0.2cm of cli] (tests) {Tests};
-\node[draw,rounded corners,fill=dachslight,below=1.0cm of build] (git) {Git / lokale Tools};
-\foreach \x in {src,build,tests,git} \draw[<->,thick] (cli) -- (\x);
+\node[draw,rounded corners,fill=fh-ooe-red!8,minimum width=2.7cm,minimum height=0.8cm] (cli) {Codex CLI};
+\node[draw,rounded corners,fill=dachslight,below left=0.9cm and 0.15cm of cli] (src) {Source};
+\node[draw,rounded corners,fill=dachslight,below=0.9cm of cli] (build) {Build};
+\node[draw,rounded corners,fill=dachslight,below right=0.9cm and 0.15cm of cli] (tests) {Tests};
+\node[draw,rounded corners,fill=dachslight,below=0.75cm of build] (git) {Git / lokale Tools};
+\draw[<->,thick] (cli) -- (src);
+\draw[<->,thick] (cli) -- (build);
+\draw[<->,thick] (cli) -- (tests);
+\draw[<->,thick] (build) -- (git);
 \end{tikzpicture}
-\column{0.43\textwidth}
+\column{0.44\textwidth}
+\small
 \begin{block}{Sehr gut}
 \begin{itemize}
-  \item lokal
-  \item direkter Workspace-Zugriff
-  \item Shell, Build, Tests, Git
+  \item lokal, direkter Workspace-Zugriff
+  \item Shell, Build, Tests und Git
   \item volle Codex-Funktionalität
 \end{itemize}
 \end{block}
@@ -134,9 +138,9 @@ SNode.C liefert nicht die KI-Funktionalität, sondern die \textbf{Netzwerk-, Tra
 \end{itemize}
 \end{block}
 \end{columns}
-\vspace{0.4em}
+\vspace{0.1em}
 \begin{alertblock}{Motivation}
-Ich wollte nicht weniger Codex -- ich wollte \textbf{Codex besser sehen und bedienen}.
+\small Ich wollte nicht weniger Codex -- ich wollte \textbf{Codex besser sehen und bedienen}.
 \end{alertblock}
 \end{frame}
 
@@ -145,19 +149,20 @@ Ich wollte nicht weniger Codex -- ich wollte \textbf{Codex besser sehen und bedi
 \begin{frame}{Der entscheidende Baustein: Codex app-server}
 \centering
 \begin{tikzpicture}[
-  box/.style={draw,rounded corners,fill=dachslight,minimum width=2.7cm,minimum height=0.8cm,align=center},
-  core/.style={draw,rounded corners,fill=fh-ooe-red!8,minimum width=4.0cm,minimum height=1.0cm,align=center},
+  box/.style={draw,rounded corners,fill=dachslight,minimum width=2.2cm,minimum height=0.72cm,align=center},
+  core/.style={draw,rounded corners,fill=fh-ooe-red!8,minimum width=3.8cm,minimum height=0.9cm,align=center},
   >=Latex,font=\small]
-\node[box] (cli) at (-4,1.4) {CLI};
-\node[box] (vscode) at (-1.35,1.4) {VS Code};
-\node[box] (jb) at (1.35,1.4) {JetBrains};
-\node[box] (custom) at (4,1.4) {eigene Clients};
-\node[core] (server) at (0,-0.4) {Codex app-server\\strukturierte Schnittstelle};
-\node[core,minimum width=2.7cm] (codex) at (0,-2.2) {Codex};
+\node[box] (cli) at (-4.35,1.45) {CLI};
+\node[box] (vscode) at (-1.45,1.45) {VS Code};
+\node[box] (jb) at (1.45,1.45) {JetBrains};
+\node[box] (custom) at (4.35,1.45) {eigene Clients};
+\node[core] (server) at (0,-0.05) {Codex app-server\\strukturierte Schnittstelle};
+\node[core,minimum width=2.5cm] (codex) at (0,-1.55) {Codex};
 \foreach \x in {cli,vscode,jb,custom} \draw[->,thick] (\x) -- (server);
 \draw[<->,very thick,fh-ooe-red] (server) -- (codex);
 \end{tikzpicture}
-\vspace{0.6em}
+\vspace{0.25em}
+\small
 \begin{columns}[T]
 \column{0.48\textwidth}
 \begin{block}{Explizite Arbeitsobjekte}
@@ -168,6 +173,7 @@ Threads, Turns, Items, History, Status, Interrupt / Resume
 Tool Calls, Shell-Ausführung, Requests, Antworten, Approvals
 \end{block}
 \end{columns}
+\vspace{0.05em}
 \begin{alertblock}{Wichtig}
 Der app-server bleibt die \textbf{semantische Autorität}. Genau diese Schnittstelle macht eine eigene Integration sinnvoll.
 \end{alertblock}
@@ -175,52 +181,19 @@ Der app-server bleibt die \textbf{semantische Autorität}. Genau diese Schnittst
 
 % -----------------------------------------------------------------------------
 % 7
-\begin{frame}{SNode.C: die vorhandene technische Foundation}
-\begin{columns}[T]
-\column{0.51\textwidth}
-\centering
-\begin{tikzpicture}[font=\small,>=Latex]
-\node[draw,rounded corners,fill=fh-ooe-red!8,minimum width=4.6cm,minimum height=0.8cm] (app) {AISuite / codex-backend};
-\node[draw,rounded corners,fill=dachslight,minimum width=4.6cm,minimum height=0.8cm,below=0.5cm of app] (proto) {HTTP / WebSocket / TLS};
-\node[draw,rounded corners,fill=dachslight,minimum width=4.6cm,minimum height=0.8cm,below=0.5cm of proto] (net) {Unix / IPv4 / IPv6};
-\node[draw,rounded corners,fill=dachslight,minimum width=4.6cm,minimum height=0.8cm,below=0.5cm of net] (core) {SNode.C -- event-driven C++20};
-\draw[->,thick] (core) -- (net);
-\draw[->,thick] (net) -- (proto);
-\draw[->,thick] (proto) -- (app);
-\end{tikzpicture}
-\column{0.45\textwidth}
-\begin{block}{Warum hier relevant?}
-\begin{itemize}
-  \item Netzwerk- und Transportbasis für AISuite
-  \item langlebige bidirektionale Verbindungen
-  \item Prozess- und Event-Integration
-\end{itemize}
-\end{block}
-\begin{block}{Zusätzlicher Zweck}
-AISuite und CodexUI/WUI sind gleichzeitig ein realistischer \textbf{Belastungstest für SNode.C}.
-\end{block}
-\end{columns}
-\vspace{0.45em}
-\begin{center}
-\small
-Codex hilft bei der Weiterentwicklung von SNode.C -- SNode.C trägt wiederum die Infrastruktur für die Codex-Nutzung.
-\end{center}
-\end{frame}
-
-% -----------------------------------------------------------------------------
-% 8
 \begin{frame}{AISuite: aus der Schnittstelle wird eine Integrationsschicht}
 \centering
 \begin{tikzpicture}[
-  box/.style={draw,rounded corners,minimum height=0.9cm,align=center,fill=dachslight},
+  box/.style={draw,rounded corners,minimum height=0.82cm,align=center,fill=dachslight},
   >=Latex,font=\small]
-\node[box,minimum width=7.7cm] (front) at (0,2.2) {CodexUI / CodexWUI / weitere Clients};
-\node[box,minimum width=7.7cm,fill=fh-ooe-red!8] (bridge) at (0,0.4) {AISuite / \texttt{codex-backend} / \texttt{codex-bridge}};
-\node[box,minimum width=4.5cm] (server) at (0,-1.5) {Codex app-server};
+\node[box,minimum width=7.4cm] (front) at (0,2.0) {CodexUI / CodexWUI / weitere Clients};
+\node[box,minimum width=7.4cm,fill=fh-ooe-red!8] (bridge) at (0,0.45) {AISuite / \texttt{codex-bridge}};
+\node[box,minimum width=4.3cm] (server) at (0,-1.15) {Codex app-server};
 \draw[<->,very thick] (front) -- node[right]{Frontend-Protokoll} (bridge);
 \draw[<->,very thick,fh-ooe-red] (bridge) -- node[right]{natives JSON-RPC} (server);
 \end{tikzpicture}
-\vspace{0.4em}
+\vspace{0.2em}
+\small
 \begin{columns}[T]
 \column{0.32\textwidth}
 \begin{block}{Integration}
@@ -238,21 +211,56 @@ Requests, Responses, Notifications, mehrere Frontends
 \end{frame}
 
 % -----------------------------------------------------------------------------
+% 8
+\begin{frame}{SNode.C: die vorhandene technische Foundation}
+\begin{columns}[T]
+\column{0.51\textwidth}
+\centering
+\begin{tikzpicture}[font=\small,>=Latex]
+\node[draw,rounded corners,fill=fh-ooe-red!8,minimum width=4.5cm,minimum height=0.75cm] (app) {AISuite / codex-bridge};
+\node[draw,rounded corners,fill=dachslight,minimum width=4.5cm,minimum height=0.75cm,below=0.42cm of app] (proto) {HTTP / WebSocket / TLS};
+\node[draw,rounded corners,fill=dachslight,minimum width=4.5cm,minimum height=0.75cm,below=0.42cm of proto] (net) {Unix / IPv4 / IPv6};
+\node[draw,rounded corners,fill=dachslight,minimum width=4.5cm,minimum height=0.75cm,below=0.42cm of net] (core) {SNode.C -- event-driven C++20};
+\draw[->,thick] (core) -- (net);
+\draw[->,thick] (net) -- (proto);
+\draw[->,thick] (proto) -- (app);
+\end{tikzpicture}
+\column{0.45\textwidth}
+\small
+\begin{block}{Warum hier relevant?}
+\begin{itemize}
+  \item Netzwerk- und Transportbasis für AISuite
+  \item langlebige bidirektionale Verbindungen
+  \item Prozess- und Event-Integration
+\end{itemize}
+\end{block}
+\begin{block}{Zusätzlicher Zweck}
+AISuite und CodexUI/WUI sind gleichzeitig ein realistischer \textbf{Belastungstest für SNode.C}.
+\end{block}
+\end{columns}
+\vspace{0.2em}
+\begin{center}
+\small
+Codex hilft bei der Weiterentwicklung von SNode.C -- SNode.C trägt wiederum die Infrastruktur für die Codex-Nutzung.
+\end{center}
+\end{frame}
+
+% -----------------------------------------------------------------------------
 % 9
 \begin{frame}{Klare Zuständigkeiten statt zweitem Backend}
 \centering
 \begin{tikzpicture}[
-  layer/.style={draw,rounded corners,minimum width=10.2cm,minimum height=1.05cm,align=center},
+  layer/.style={draw,rounded corners,minimum width=10.0cm,minimum height=1.0cm,align=center},
   >=Latex,font=\small]
-\node[layer,fill=fh-ooe-red!8] (server) at (0,2.0) {\textbf{Codex app-server}\\Threads · Turns · Items · semantischer Zustand};
-\node[layer,fill=dachslight] (bridge) at (0,0.35) {\textbf{AISuite / codex-backend}\\Transport · Routing · Verbindungs- und Request-Korrelation};
-\node[layer,fill=white] (ui) at (0,-1.3) {\textbf{CodexUI / CodexWUI}\\Darstellung · Interaktion · lokale UI-Mechanik};
+\node[layer,fill=fh-ooe-red!8] (server) at (0,1.85) {\textbf{Codex app-server}\\Threads · Turns · Items · semantischer Zustand};
+\node[layer,fill=dachslight] (bridge) at (0,0.25) {\textbf{AISuite / codex-bridge}\\Transport · Routing · Verbindungs- und Request-Korrelation};
+\node[layer,fill=white] (ui) at (0,-1.35) {\textbf{CodexUI / CodexWUI}\\Darstellung · Interaktion · lokale UI-Mechanik};
 \draw[<->,thick] (server) -- (bridge);
 \draw[<->,thick] (bridge) -- (ui);
 \end{tikzpicture}
-\vspace{0.7em}
+\vspace{0.4em}
 \begin{alertblock}{Designentscheidung}
-AISuite hält \textbf{keine zweite semantische Kopie} von Threads, Turns oder Items. Der app-server bleibt die Quelle der Wahrheit.
+\small AISuite hält \textbf{keine zweite semantische Kopie} von Threads, Turns oder Items. Der app-server bleibt die Quelle der Wahrheit.
 \end{alertblock}
 \end{frame}
 
@@ -261,21 +269,24 @@ AISuite hält \textbf{keine zweite semantische Kopie} von Threads, Turns oder It
 \begin{frame}{Die komplette Laufzeitarchitektur}
 \centering
 \begin{tikzpicture}[
-  box/.style={draw,rounded corners,fill=dachslight,minimum width=3.0cm,minimum height=0.9cm,align=center},
-  wide/.style={draw,rounded corners,fill=fh-ooe-red!8,minimum width=6.2cm,minimum height=0.95cm,align=center},
+  box/.style={draw,rounded corners,fill=dachslight,minimum width=3.0cm,minimum height=0.85cm,align=center},
+  wide/.style={draw,rounded corners,fill=fh-ooe-red!8,minimum width=5.5cm,minimum height=0.9cm,align=center},
   >=Latex,font=\small]
-\node[box] (native) at (-3.7,2.1) {CodexUI\\Qt 6};
-\node[box] (web) at (0,2.1) {CodexWUI\\Browser};
-\node[box] (other) at (3.7,2.1) {weitere Clients};
-\node[wide] (bridge) at (0,0.35) {AISuite / codex-backend / codex-bridge};
-\node[box,minimum width=4.2cm] (server) at (0,-1.35) {Codex app-server};
-\node[box,minimum width=2.6cm] (codex) at (0,-2.85) {Codex};
+\node[box] (native) at (-3.7,1.9) {CodexUI\\Qt 6};
+\node[box] (web) at (0,1.9) {CodexWUI\\Browser};
+\node[box] (other) at (3.7,1.9) {weitere Clients};
+\node[wide] (bridge) at (0,0.25) {AISuite / codex-bridge};
+\node[box,minimum width=4.0cm] (server) at (0,-1.3) {Codex app-server};
+\node[box,minimum width=2.5cm] (codex) at (0,-2.65) {Codex};
 \foreach \x in {native,web,other} \draw[<->,thick] (\x) -- (bridge);
 \draw[<->,very thick,fh-ooe-red] (bridge) -- node[right]{JSON-RPC} (server);
 \draw[<->,thick] (server) -- (codex);
-\node[draw,dashed,rounded corners,fit=(native)(web)(other)(bridge),inner sep=0.28cm,label={[font=\scriptsize]left:SNode.C-basierte Seite}] {};
+\node[draw,dashed,rounded corners,fit=(native)(web)(other)(bridge),inner sep=0.25cm,label={[font=\scriptsize]left:SNode.C-basierte Seite}] {};
 \end{tikzpicture}
-\smallsource{Transportseitig sind lokale und netzwerkbasierte Frontend-Zugänge möglich; die Codex-Semantik bleibt beim app-server.}
+\vspace{0.15em}
+\begin{center}
+\scriptsize Transportseitig sind lokale und netzwerkbasierte Frontend-Zugänge möglich; die Codex-Semantik bleibt beim app-server.
+\end{center}
 \end{frame}
 
 % -----------------------------------------------------------------------------
@@ -295,15 +306,15 @@ AISuite hält \textbf{keine zweite semantische Kopie} von Threads, Turns oder It
 \column{0.48\textwidth}
 \centering
 \begin{tikzpicture}[font=\small,>=Latex]
-\node[draw,rounded corners,fill=dachslight,minimum width=4.0cm,minimum height=1.0cm] (qt) {Qt GUI Thread};
-\node[draw,rounded corners,fill=white,minimum width=4.0cm,minimum height=1.0cm,below=0.75cm of qt] (q) {typed bounded queues};
-\node[draw,rounded corners,fill=fh-ooe-red!8,minimum width=4.0cm,minimum height=1.0cm,below=0.75cm of q] (net) {SNode.C Client Thread};
+\node[draw,rounded corners,fill=dachslight,minimum width=4.0cm,minimum height=0.95cm] (qt) {Qt GUI Thread};
+\node[draw,rounded corners,fill=white,minimum width=4.0cm,minimum height=0.95cm,below=0.62cm of qt] (q) {typed bounded queues};
+\node[draw,rounded corners,fill=fh-ooe-red!8,minimum width=4.0cm,minimum height=0.95cm,below=0.62cm of q] (net) {SNode.C Client Thread};
 \draw[<->,thick] (qt) -- (q);
 \draw[<->,thick] (q) -- (net);
 \end{tikzpicture}
-\vspace{0.7em}
+\vspace{0.4em}
 \begin{block}{Kein WebView-Wrapper}
-Native UI und Netzwerkpfad sind bewusst getrennt, teilen aber denselben aktuellen Arbeitszustand.
+\small Native UI und Netzwerkpfad sind bewusst getrennt, teilen aber denselben aktuellen Arbeitszustand.
 \end{block}
 \end{columns}
 \end{frame}
@@ -314,16 +325,16 @@ Native UI und Netzwerkpfad sind bewusst getrennt, teilen aber denselben aktuelle
 \begin{columns}[T]
 \column{0.49\textwidth}
 \centering
-\fbox{\parbox[c][4.7cm][c]{0.90\linewidth}{\centering\Large\textbf{SCREENSHOT-PLATZHALTER}\\[0.8em]\normalsize CodexUI\\Native Qt 6}}
-\\[0.5em]
+\fbox{\parbox[c][4.55cm][c]{0.90\linewidth}{\centering\Large\textbf{SCREENSHOT-PLATZHALTER}\\[0.7em]\normalsize CodexUI\\Native Qt 6}}
+\\[0.4em]
 \textbf{CodexUI -- nativ}
 \column{0.49\textwidth}
 \centering
-\fbox{\parbox[c][4.7cm][c]{0.90\linewidth}{\centering\Large\textbf{SCREENSHOT-PLATZHALTER}\\[0.8em]\normalsize CodexWUI\\Browser}}
-\\[0.5em]
+\fbox{\parbox[c][4.55cm][c]{0.90\linewidth}{\centering\Large\textbf{SCREENSHOT-PLATZHALTER}\\[0.7em]\normalsize CodexWUI\\Browser}}
+\\[0.4em]
 \textbf{CodexWUI -- Web}
 \end{columns}
-\vspace{0.7em}
+\vspace{0.45em}
 \begin{center}
 \large
 \textbf{Unterschiedliche Präsentationsschichten -- dieselbe app-server-Semantik.}
@@ -337,15 +348,16 @@ Native UI und Netzwerkpfad sind bewusst getrennt, teilen aber denselben aktuelle
 \column{0.50\textwidth}
 \centering
 \begin{tikzpicture}[font=\small,>=Latex]
-\node[draw,rounded corners,fill=dachslight,minimum width=3.1cm,minimum height=0.9cm] (native) at (-2.2,1.7) {CodexUI};
-\node[draw,rounded corners,fill=dachslight,minimum width=3.1cm,minimum height=0.9cm] (web) at (2.2,1.7) {CodexWUI};
-\node[draw,rounded corners,fill=fh-ooe-red!8,minimum width=4.6cm,minimum height=1.0cm] (bridge) at (0,-0.2) {codex-backend};
-\node[draw,rounded corners,fill=dachslight,minimum width=3.4cm,minimum height=0.9cm] (server) at (0,-2.0) {app-server};
+\node[draw,rounded corners,fill=dachslight,minimum width=3.1cm,minimum height=0.85cm] (native) at (-2.2,1.55) {CodexUI};
+\node[draw,rounded corners,fill=dachslight,minimum width=3.1cm,minimum height=0.85cm] (web) at (2.2,1.55) {CodexWUI};
+\node[draw,rounded corners,fill=fh-ooe-red!8,minimum width=4.3cm,minimum height=0.9cm] (bridge) at (0,-0.05) {codex-bridge};
+\node[draw,rounded corners,fill=dachslight,minimum width=3.4cm,minimum height=0.85cm] (server) at (0,-1.65) {app-server};
 \draw[<->,thick] (native) -- (bridge);
 \draw[<->,thick] (web) -- (bridge);
 \draw[<->,thick] (bridge) -- (server);
 \end{tikzpicture}
 \column{0.46\textwidth}
+\small
 \begin{block}{Der Browser ändert den Zugang}
 \begin{itemize}
   \item keine lokale Qt-Installation nötig
@@ -366,26 +378,26 @@ Der laufende Engineering-Kontext wird \textbf{erreichbar} -- nicht bloß eine ei
 \begin{frame}{Der unerwartete Schritt: Multi-Client}
 \centering
 \begin{tikzpicture}[
-  client/.style={draw,rounded corners,fill=dachslight,minimum width=2.8cm,minimum height=0.85cm,align=center},
-  core/.style={draw,rounded corners,fill=fh-ooe-red!8,minimum width=4.5cm,minimum height=1.0cm,align=center},
+  client/.style={draw,rounded corners,fill=dachslight,minimum width=2.8cm,minimum height=0.8cm,align=center},
+  core/.style={draw,rounded corners,fill=fh-ooe-red!8,minimum width=3.8cm,minimum height=0.9cm,align=center},
   >=Latex,font=\small]
-\node[client] (c1) at (-4,2.0) {CodexUI};
-\node[client] (c2) at (0,2.0) {CodexWUI};
-\node[client] (c3) at (4,2.0) {weiterer Client};
-\node[core] (bridge) at (0,0.15) {codex-backend / codex-bridge};
-\node[client,minimum width=3.6cm] (server) at (0,-1.65) {ein app-server-Kontext};
+\node[client] (c1) at (-4,1.8) {CodexUI};
+\node[client] (c2) at (0,1.8) {CodexWUI};
+\node[client] (c3) at (4,1.8) {weiterer Client};
+\node[core] (bridge) at (0,0.2) {codex-bridge};
+\node[client,minimum width=3.5cm] (server) at (0,-1.4) {ein app-server-Kontext};
 \foreach \x in {c1,c2,c3} \draw[<->,thick] (\x) -- (bridge);
 \draw[<->,very thick,fh-ooe-red] (bridge) -- (server);
 \end{tikzpicture}
-\vspace{0.6em}
+\vspace{0.35em}
 \begin{columns}[T]
 \column{0.48\textwidth}
 \begin{block}{Gemeinsam sichtbar}
-Notifications, Thread-/Turn-Fortschritt, laufende Aktivität
+\small Notifications, Thread-/Turn-Fortschritt, laufende Aktivität
 \end{block}
 \column{0.48\textwidth}
 \begin{block}{Nicht an einen Bildschirm gebunden}
-Mehrere Frontends können denselben Engineering-Kontext verfolgen.
+\small Mehrere Frontends können denselben Engineering-Kontext verfolgen.
 \end{block}
 \end{columns}
 \end{frame}
@@ -397,15 +409,16 @@ Mehrere Frontends können denselben Engineering-Kontext verfolgen.
 \column{0.47\textwidth}
 \centering
 \begin{tikzpicture}[font=\small,>=Latex]
-\node[draw,circle,fill=fh-ooe-red!8,minimum size=1.2cm] (ctrl) at (0,2.2) {C};
-\node[draw,circle,fill=dachslight,minimum size=1.2cm] (o1) at (-2.4,0) {O};
-\node[draw,circle,fill=dachslight,minimum size=1.2cm] (o2) at (2.4,0) {O};
-\node[draw,rounded corners,fill=white,minimum width=3.8cm,minimum height=1.0cm] (bridge) at (0,-1.6) {codex-bridge};
+\node[draw,circle,fill=fh-ooe-red!8,minimum size=1.15cm] (ctrl) at (0,2.0) {C};
+\node[draw,circle,fill=dachslight,minimum size=1.15cm] (o1) at (-2.3,0) {O};
+\node[draw,circle,fill=dachslight,minimum size=1.15cm] (o2) at (2.3,0) {O};
+\node[draw,rounded corners,fill=white,minimum width=3.7cm,minimum height=0.9cm] (bridge) at (0,-1.45) {codex-bridge};
 \draw[<->,very thick,fh-ooe-red] (ctrl) -- (bridge);
 \draw[<->,thick] (o1) -- (bridge);
 \draw[<->,thick] (o2) -- (bridge);
 \end{tikzpicture}
 \column{0.49\textwidth}
+\small
 \begin{block}{Controller}
 \begin{itemize}
   \item steuert aktive Requests
@@ -421,9 +434,9 @@ Mehrere Frontends können denselben Engineering-Kontext verfolgen.
 \end{itemize}
 \end{block}
 \end{columns}
-\vspace{0.35em}
+\vspace{0.1em}
 \begin{alertblock}{Explizit statt implizit}
-Kontrollübergabe wird bewusst vorgenommen; bei Disconnect wird nicht still irgendein anderer Client zum Controller.
+\small Kontrollübergabe wird bewusst vorgenommen; bei Disconnect wird nicht still irgendein anderer Client zum Controller.
 \end{alertblock}
 \end{frame}
 
@@ -432,70 +445,76 @@ Kontrollübergabe wird bewusst vorgenommen; bei Disconnect wird nicht still irge
 \begin{frame}{Und jetzt wird es für die Lehre interessant}
 \centering
 \begin{tikzpicture}[
-  box/.style={draw,rounded corners,minimum width=3.1cm,minimum height=0.85cm,align=center,fill=dachslight},
+  box/.style={draw,rounded corners,minimum width=3.1cm,minimum height=0.8cm,align=center,fill=dachslight},
   >=Latex,font=\small]
-\node[box] (code) at (-4.2,1.2) {Quellcode};
-\node[box] (ctx) at (0,1.2) {AI-Arbeitskontext};
-\node[box] (tools) at (4.2,1.2) {ausgeführte Tools};
-\node[box,fill=fh-ooe-red!8,minimum width=5.0cm] (process) at (0,-0.8) {gemeinsamer Engineering-Prozess};
+\node[box] (code) at (-4.2,1.1) {Quellcode};
+\node[box] (ctx) at (0,1.1) {AI-Arbeitskontext};
+\node[box] (tools) at (4.2,1.1) {ausgeführte Tools};
+\node[box,fill=fh-ooe-red!8,minimum width=5.0cm] (process) at (0,-0.7) {gemeinsamer Engineering-Prozess};
 \draw[->,thick] (code) -- (process);
 \draw[->,thick] (ctx) -- (process);
 \draw[->,thick] (tools) -- (process);
 \end{tikzpicture}
-\vspace{0.7em}
+\vspace{0.5em}
 \begin{block}{Der gemeinsame Gegenstand erweitert sich}
-Lehrende und Studierende sehen nicht nur das Ergebnis im Repository, sondern können denselben laufenden KI-gestützten Engineering-Prozess beobachten und kontrolliert daran teilnehmen.
+\small Lehrende und Studierende sehen nicht nur das Ergebnis im Repository, sondern können denselben laufenden KI-gestützten Engineering-Prozess beobachten und kontrolliert daran teilnehmen.
 \end{block}
 \end{frame}
 
 % -----------------------------------------------------------------------------
 % 17
 \begin{frame}{Drei mögliche Lehrszenarien}
+\small
 \begin{columns}[T]
 \column{0.32\textwidth}
 \centering
-\textbf{A -- Gemeinsame Session}\\[0.4em]
+\textbf{A -- Gemeinsame Session}\\[0.3em]
 \begin{tikzpicture}[font=\scriptsize,>=Latex]
-\node[draw,circle] (l) at (0,1.4) {L};
-\node[draw,circle] (s1) at (-1.1,0.2) {S1};
-\node[draw,circle] (s2) at (1.1,0.2) {S2};
-\node[draw,rounded corners,fill=dachslight,minimum width=2.6cm] (b) at (0,-1.1) {eine Session};
+\node[draw,circle] (l) at (0,1.25) {L};
+\node[draw,circle] (s1) at (-1.05,0.15) {S1};
+\node[draw,circle] (s2) at (1.05,0.15) {S2};
+\node[draw,rounded corners,fill=dachslight,minimum width=2.5cm] (b) at (0,-1.0) {eine Session};
 \foreach \x in {l,s1,s2} \draw[<->] (\x) -- (b);
 \end{tikzpicture}
 \\[-0.1em]
-\small Debugging, Architektur, Review
+\scriptsize Debugging, Architektur, Review
 
-\column{0.32\textwidth}
+\column{0.34\textwidth}
 \centering
-\textbf{B -- Eigene Workspaces}\\[0.4em]
-\begin{tikzpicture}[font=\scriptsize,>=Latex]
-\node[draw,circle] (l) at (0,1.4) {L};
-\node[draw,rounded corners,fill=dachslight] (s1) at (-1.2,-0.2) {S1};
-\node[draw,rounded corners,fill=fh-ooe-red!8] (s2) at (0,-1.2) {S2};
-\node[draw,rounded corners,fill=dachslight] (s3) at (1.2,-0.2) {S3};
-\draw[<->] (l) -- (s1);
+\textbf{B -- Individuelle Sessions}\\[0.3em]
+\begin{tikzpicture}[font=\tiny,>=Latex,
+  session/.style={draw,rounded corners,fill=dachslight,minimum width=1.3cm,minimum height=1.05cm,align=center}]
+\node[draw,circle] (l) at (0,1.35) {L};
+\node[session] (s1) at (-1.35,-0.35) {S1\\eigene\\Session};
+\node[session,fill=fh-ooe-red!8] (s2) at (0,-0.35) {S2\\eigene\\Session};
+\node[session] (s3) at (1.35,-0.35) {S3\\eigene\\Session};
+\draw[<->,thin] (l) -- (s1);
 \draw[<->,very thick,fh-ooe-red] (l) -- (s2);
-\draw[<->] (l) -- (s3);
+\draw[<->,thin] (l) -- (s3);
 \end{tikzpicture}
-\\[0.1em]
-\small gezielte Betreuung
+\\[0.05em]
+\scriptsize gezielte Betreuung einer individuellen Session
 
-\column{0.32\textwidth}
+\column{0.30\textwidth}
 \centering
-\textbf{C -- Rollenwechsel}\\[0.4em]
+\textbf{C -- Rollenwechsel}\\[0.3em]
 \begin{tikzpicture}[font=\scriptsize,>=Latex]
-\node[draw,rounded corners,fill=dachslight] (a) at (-1.25,0.9) {A};
-\node[draw,rounded corners,fill=dachslight] (b) at (1.25,0.9) {B};
-\node[draw,rounded corners,fill=fh-ooe-red!8,minimum width=2.6cm] (w) at (0,-0.8) {gemeinsamer Kontext};
+\node[draw,rounded corners,fill=dachslight] (a) at (-1.15,0.8) {A};
+\node[draw,rounded corners,fill=dachslight] (b) at (1.15,0.8) {B};
+\node[draw,rounded corners,fill=fh-ooe-red!8,minimum width=2.45cm] (w) at (0,-0.75) {gemeinsamer Kontext};
 \draw[->,thick] (a) -- node[left]{Implementierung} (w);
 \draw[->,thick,fh-ooe-red] (b) -- node[right]{Review} (w);
 \end{tikzpicture}
-\\[0.1em]
-\small Peer Review / Übergabe
+\\[0.05em]
+\scriptsize Peer Review / Übergabe
 \end{columns}
-\vspace{0.7em}
+\vspace{0.3em}
+\begin{center}
+\scriptsize\textbf{Legende:} L = Lehrperson \qquad S = Studierende
+\end{center}
+\vspace{0.1em}
 \begin{alertblock}{Das Interessante}
-Nicht ``KI als Tutor'' ist hier neu, sondern \textbf{gemeinsam beobachtbare und übergebbare AI-assisted Engineering-Sessions}.
+\small Nicht ``KI als Tutor'' ist hier neu, sondern \textbf{gemeinsam beobachtbare und übergebbare AI-assisted Engineering-Sessions}.
 \end{alertblock}
 \end{frame}
 
@@ -504,19 +523,20 @@ Nicht ``KI als Tutor'' ist hier neu, sondern \textbf{gemeinsam beobachtbare und 
 \begin{frame}{Live-Demo: dieselbe Session, zwei Clients}
 \centering
 \begin{tikzpicture}[
-  box/.style={draw,rounded corners,fill=dachslight,minimum width=3.1cm,minimum height=0.9cm,align=center},
+  box/.style={draw,rounded corners,fill=dachslight,minimum width=3.0cm,minimum height=0.82cm,align=center},
   >=Latex,font=\small]
-\node[box] (native) at (-3.2,2.0) {CodexUI\\lokal};
-\node[box] (web) at (3.2,2.0) {CodexWUI\\Browser};
-\node[box,fill=fh-ooe-red!8,minimum width=4.5cm] (bridge) at (0,0.2) {codex-backend};
-\node[box] (server) at (0,-1.5) {app-server};
-\node[box] (codex) at (0,-2.9) {Codex};
+\node[box] (native) at (-3.2,1.75) {CodexUI\\lokal};
+\node[box] (web) at (3.2,1.75) {CodexWUI\\Browser};
+\node[box,fill=fh-ooe-red!8,minimum width=4.2cm] (bridge) at (0,0.15) {codex-bridge};
+\node[box] (server) at (0,-1.3) {app-server};
+\node[box] (codex) at (0,-2.5) {Codex};
 \draw[<->,thick] (native) -- (bridge);
 \draw[<->,thick] (web) -- (bridge);
 \draw[<->,thick] (bridge) -- (server);
 \draw[<->,thick] (server) -- (codex);
 \end{tikzpicture}
-\vspace{0.45em}
+\vspace{0.2em}
+\small
 \begin{columns}[T]
 \column{0.49\textwidth}
 \begin{enumerate}
@@ -530,8 +550,8 @@ Nicht ``KI als Tutor'' ist hier neu, sondern \textbf{gemeinsam beobachtbare und 
   \item kurzer Rollenwechsel / Review
 \end{enumerate}
 \end{columns}
-\vspace{0.3em}
-\begin{center}\small Ziel: \textbf{Architektur beweisen}, nicht Feature-Rundgang.\end{center}
+\vspace{0.05em}
+\begin{center}\scriptsize Ziel: \textbf{Architektur beweisen}, nicht Feature-Rundgang.\end{center}
 \end{frame}
 
 % -----------------------------------------------------------------------------
@@ -547,13 +567,13 @@ Nicht ``KI als Tutor'' ist hier neu, sondern \textbf{gemeinsam beobachtbare und 
 \node[phase,right=of p4] (p5) {Multi-\\Client};
 \foreach \a/\b in {p1/p2,p2/p3,p3/p4,p4/p5} \draw[->,thick] (\a) -- (\b);
 \end{tikzpicture}
-\vspace{0.9em}
+\vspace{0.65em}
 \begin{enumerate}
   \item Ausgangspunkt war ein \textbf{reales eigenes Entwicklungsproblem}.
   \item Die Architektur trennt \textbf{Codex-Semantik, Integration und Darstellung} sauber.
   \item Multi-Client macht aus einem persönlichen AI-Assistenten einen \textbf{kollaborativen Engineering-Workspace}.
 \end{enumerate}
-\vspace{0.6em}
+\vspace{0.35em}
 \begin{alertblock}{Schlussgedanke}
 Die Lehranwendung war nicht der Ausgangspunkt -- sie ist aus den technischen Eigenschaften des Systems entstanden.
 \end{alertblock}
