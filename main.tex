@@ -622,7 +622,7 @@ Der laufende Engineering-Kontext wird \textbf{erreichbar} -- nicht bloß eine ei
 \begin{frame}{Was daraus geworden ist}
 \centering
 \begin{tikzpicture}[font=\small,>=Latex,node distance=0.42cm]
-\tikzset{phase/.style={draw,rounded corners,fill=dachslight,minimum width=2.0cm,minimum height=0.78cm,align=center}}
+\tikzset{phase/.style={draw,rounded corners,fill=dachslight,minimum width=2.0cm,minimum height=0.72cm,align=center}}
 \node[phase] (p1) {lokaler\\Codex-Workflow};
 \node[phase,right=of p1] (p2) {app-server};
 \node[phase,right=of p2,fill=fh-ooe-red!8] (p3) {AISuite};
@@ -630,18 +630,26 @@ Der laufende Engineering-Kontext wird \textbf{erreichbar} -- nicht bloß eine ei
 \node[phase,right=of p4] (p5) {Multi-\\Client};
 \foreach \a/\b in {p1/p2,p2/p3,p3/p4,p4/p5} \draw[->,thick] (\a) -- (\b);
 \end{tikzpicture}
-\vspace{0.5em}
+\vspace{0.3em}
 \small
-\begin{enumerate}
-  \item Ausgangspunkt war ein \textbf{reales eigenes Entwicklungsproblem}.
-  \item Die Architektur trennt \textbf{Codex-Semantik, Integration und Darstellung} sauber.
-  \item Multi-Client macht aus einem persönlichen AI-Assistenten einen \textbf{kollaborativen Engineering-Workspace}.
-  \item \textbf{SNode.C wird eingesetzt, um ein System zu entwickeln, das wiederum bei der Weiterentwicklung von SNode.C hilft.}
-\end{enumerate}
-\vspace{0.2em}
-\begin{alertblock}{Schlussgedanke}
-\small Die Lehranwendung war nicht der Ausgangspunkt -- sie ist aus den technischen Eigenschaften des Systems entstanden.
-\end{alertblock}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{block}{Ergebnis}
+\begin{itemize}
+  \item CodexUI hat einen Reifegrad erreicht, um auch für \textbf{komplexe reale Projekte} eingesetzt werden zu können.
+  \item Multi-Client erweitert den persönlichen Assistenten zum \textbf{kollaborativen Engineering-Workspace}.
+  \item Codex-Semantik, Integration und Darstellung bleiben architektonisch klar getrennt.
+\end{itemize}
+\end{block}
+\column{0.48\textwidth}
+\begin{block}{Wie es entwickelt wurde}
+\begin{itemize}
+  \item \textbf{Keine einzige Zeile Projektcode wurde von Hand geschrieben.}
+  \item Codex implementiert AISuite, CodexUI und CodexWUI -- \textbf{meine Rolle ist die des Architekten}: Anforderungen, Architektur, Review und Steuerung.
+  \item SNode.C wird eingesetzt, um ein System zu entwickeln, das wiederum bei der \textbf{Weiterentwicklung von SNode.C} hilft.
+\end{itemize}
+\end{block}
+\end{columns}
 \end{frame}
 
 % -----------------------------------------------------------------------------
