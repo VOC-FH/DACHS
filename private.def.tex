@@ -1,0 +1,63 @@
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[ngerman]{babel}
+\RequirePackage{lmodern}
+\RequirePackage{tikz}
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{xcolor}
+\usetikzlibrary{arrows.meta,positioning,fit,calc,backgrounds,shapes.geometric}
+
+\author[Volker Christian]{Volker Christian}
+\degree[MTD]{\Large Media Technology \& Design}
+\title[DACHS 2026]{\Huge Kollaboratives Software Engineering mit KI}
+\institute[FH OÖ -- Hagenberg]{FH Upper Austria -- Campus Hagenberg\\Department of Digital Media}
+\semester[DACHS 2026 | Biel]{DACHS Symposium 2026 -- Biel/Bienne}
+\date[07.09.2026]{7. September 2026}
+\titlegraphic{\includegraphics[height=1.5cm]{style/Fhooe-logo.pdf}}
+
+\def\inserttitlehead{\insertshorttitle}
+\nosectionpage
+\nopartpage
+\nolecturepage
+
+\definecolor{dachsblue}{HTML}{17365D}
+\definecolor{dachsgreen}{HTML}{2E7D32}
+\definecolor{dachsamber}{HTML}{A15C00}
+\definecolor{dachslight}{HTML}{F4F6F8}
+\definecolor{dachsgray}{HTML}{5B6573}
+
+\newcommand{\key}[1]{\textbf{\color{fh-ooe-red}#1}}
+\newcommand{\smallsource}[1]{\vspace{0.3em}{\tiny\color{dachsgray}#1}}
+
+% Match the title-page usage in SNodeC/talks: compact spacing, degree/title,
+% author, institute, FH logo and semester/event in the canonical FH OÖ frame.
+\makeatletter
+\defbeamertemplate*{title page}{fh-ooe-local}[1][]
+{
+  \vbox{}
+  \vfill
+  \begin{centering}
+    \begin{beamercolorbox}[sep=8pt,center,#1]{title}
+      \ifx\insertdegree\@empty\else
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertdegree\par}
+        \vskip0.25em
+      \fi
+      \usebeamerfont{title}\inserttitle\par
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=8pt,center,#1]{author}
+      \usebeamerfont{author}\insertauthor
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=8pt,center,#1]{institute}
+      \usebeamerfont{institute}\insertinstitute
+    \end{beamercolorbox}
+    {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
+    \begin{beamercolorbox}[sep=8pt,center,#1]{date}
+      \usebeamerfont{date}\insertsemester
+    \end{beamercolorbox}\vskip0.5em
+  \end{centering}
+  \vfill
+}
+\setbeamertemplate{title page}[fh-ooe-local][colsep=-4bp]
+\makeatother
