@@ -303,7 +303,7 @@ Codex hilft bei der Weiterentwicklung von SNode.C -- SNode.C trägt wiederum die
 \node[box,fill=fh-ooe-red!8] (bridge) at (0,1.35) {codex-bridge};
 \node[box] (server) at (0,0.25) {Codex app-server};
 \node[box] (workspace) at (0,-0.95) {Repository · Build · Tests · Tools};
-\node[font=\scriptsize,text=dachsgray] at (0,-1.75) {codex-bridge startet / besitzt / überwacht den app-server};
+\node[font=\tiny,text=dachsgray,align=center] at (0,-1.72) {Owned Mode: app-server über stdio gestartet / besessen / überwacht\\extern: Unix / IPv4 / IPv6 WebSocket möglich -- derzeit unverschlüsselt};
 \draw[->,thick] (bridge) -- node[right,font=\scriptsize]{Lifecycle} (server);
 \draw[<->,thick] (server) -- (workspace);
 \node[client] (native) at (-4.7,-2.45) {Benutzerrechner\\CodexUI};
@@ -311,7 +311,7 @@ Codex hilft bei der Weiterentwicklung von SNode.C -- SNode.C trägt wiederum die
 \draw[<->,very thick,fh-ooe-red] (native) -- (bridge);
 \draw[<->,very thick,fh-ooe-red] (web) -- (bridge);
 \end{tikzpicture}
-\vspace{0.25em}
+\vspace{0.2em}
 \begin{alertblock}{Konsequenz}
 \small Der Benutzerrechner muss nicht leistungsfähig sein: dort läuft nur die Oberfläche; Repository, Compiler, Tests und Codex-Ausführung bleiben auf der Entwicklungsmaschine.
 \end{alertblock}
@@ -319,19 +319,18 @@ Codex hilft bei der Weiterentwicklung von SNode.C -- SNode.C trägt wiederum die
 
 % -----------------------------------------------------------------------------
 % 12
-\begin{frame}{Zugänge und aktueller Plattformstatus}
-\small
+\begin{frame}{Zugänge, Provider-Pfad und Plattformstatus}
+\scriptsize
 \begin{columns}[T]
 \column{0.49\textwidth}
-\begin{block}{CodexUI -- native Clients}
+\begin{block}{Frontend $\leftrightarrow$ codex-bridge}
+\textbf{CodexUI}
 \begin{itemize}
-  \item Unix Domain Socket
-  \item IPv4 und IPv6
+  \item Unix Domain Socket, IPv4 und IPv6
   \item WebSocket-basierte Zugänge
-  \item unverschlüsselt oder SSL/TLS-geschützt
+  \item plain oder SSL/TLS-geschützt
 \end{itemize}
-\end{block}
-\begin{block}{CodexWUI -- Browser}
+\textbf{CodexWUI}
 \begin{itemize}
   \item IPv4 / IPv6 über WebSocket
   \item plain oder SSL/TLS
@@ -339,16 +338,20 @@ Codex hilft bei der Weiterentwicklung von SNode.C -- SNode.C trägt wiederum die
 \end{itemize}
 \end{block}
 \column{0.47\textwidth}
-\begin{block}{Warum diese Trennung?}
+\begin{block}{codex-bridge $\leftrightarrow$ app-server}
 \begin{itemize}
-  \item lokale Nutzung ohne Netzwerk-Exposition möglich
-  \item entfernte Nutzung über IP-basierte Transporte
-  \item dieselbe codex-bridge-Semantik unabhängig vom Zugang
+  \item stdio im lokalen owned mode
+  \item Unix Domain Socket
+  \item IPv4 / IPv6 über WebSocket
+  \item \textbf{Provider-Pfad derzeit unverschlüsselt}
 \end{itemize}
 \end{block}
-\begin{alertblock}{Stand heute}
-Die nativen Binaries \texttt{codex-bridge} und CodexUI existieren derzeit für \textbf{Linux}. CodexWUI selbst ist browserbasiert.
+\begin{alertblock}{Empfehlung}
+Bridge und app-server möglichst auf derselben vertrauenswürdigen Maschine betreiben. Eine Trennung über untrusted Networks ist ohne zusätzliche Absicherung \textbf{nicht empfehlenswert}.
 \end{alertblock}
+\begin{block}{Stand heute}
+Die nativen Binaries \texttt{codex-bridge} und CodexUI existieren derzeit für \textbf{Linux}; CodexWUI ist browserbasiert.
+\end{block}
 \end{columns}
 \end{frame}
 
