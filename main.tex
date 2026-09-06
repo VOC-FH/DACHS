@@ -291,6 +291,69 @@ Codex hilft bei der Weiterentwicklung von SNode.C -- SNode.C trägt wiederum die
 
 % -----------------------------------------------------------------------------
 % 11
+\begin{frame}{Deployment: Rechenleistung dort, wo entwickelt wird}
+\centering
+\begin{tikzpicture}[
+  host/.style={draw,rounded corners,minimum width=6.4cm,minimum height=4.8cm,fill=dachslight,align=center},
+  box/.style={draw,rounded corners,minimum width=3.6cm,minimum height=0.75cm,fill=white,align=center},
+  client/.style={draw,rounded corners,minimum width=3.0cm,minimum height=1.0cm,fill=white,align=center},
+  >=Latex,font=\small]
+\node[host] (dev) at (0,0.35) {};
+\node[font=\small\bfseries] at (0,2.35) {leistungsfähige Entwicklungsmaschine};
+\node[box,fill=fh-ooe-red!8] (bridge) at (0,1.35) {codex-bridge};
+\node[box] (server) at (0,0.25) {Codex app-server};
+\node[box] (workspace) at (0,-0.95) {Repository · Build · Tests · Tools};
+\node[font=\scriptsize,text=dachsgray] at (0,-1.75) {codex-bridge startet / besitzt / überwacht den app-server};
+\draw[->,thick] (bridge) -- node[right,font=\scriptsize]{Lifecycle} (server);
+\draw[<->,thick] (server) -- (workspace);
+\node[client] (native) at (-4.7,-2.45) {Benutzerrechner\\CodexUI};
+\node[client] (web) at (4.7,-2.45) {Benutzerrechner\\CodexWUI};
+\draw[<->,very thick,fh-ooe-red] (native) -- (bridge);
+\draw[<->,very thick,fh-ooe-red] (web) -- (bridge);
+\end{tikzpicture}
+\vspace{0.25em}
+\begin{alertblock}{Konsequenz}
+\small Der Benutzerrechner muss nicht leistungsfähig sein: dort läuft nur die Oberfläche; Repository, Compiler, Tests und Codex-Ausführung bleiben auf der Entwicklungsmaschine.
+\end{alertblock}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% 12
+\begin{frame}{Zugänge und aktueller Plattformstatus}
+\small
+\begin{columns}[T]
+\column{0.49\textwidth}
+\begin{block}{CodexUI -- native Clients}
+\begin{itemize}
+  \item Unix Domain Socket
+  \item IPv4 und IPv6
+  \item WebSocket-basierte Zugänge
+  \item unverschlüsselt oder SSL/TLS-geschützt
+\end{itemize}
+\end{block}
+\begin{block}{CodexWUI -- Browser}
+\begin{itemize}
+  \item IPv4 / IPv6 über WebSocket
+  \item plain oder SSL/TLS
+  \item auf Client-Seite nur ein Browser nötig
+\end{itemize}
+\end{block}
+\column{0.47\textwidth}
+\begin{block}{Warum diese Trennung?}
+\begin{itemize}
+  \item lokale Nutzung ohne Netzwerk-Exposition möglich
+  \item entfernte Nutzung über IP-basierte Transporte
+  \item dieselbe codex-bridge-Semantik unabhängig vom Zugang
+\end{itemize}
+\end{block}
+\begin{alertblock}{Stand heute}
+Die nativen Binaries \texttt{codex-bridge} und CodexUI existieren derzeit für \textbf{Linux}. CodexWUI selbst ist browserbasiert.
+\end{alertblock}
+\end{columns}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% 13
 \begin{frame}{CodexUI: mein ursprüngliches Ziel}
 \begin{columns}[T]
 \column{0.48\textwidth}
@@ -320,7 +383,7 @@ Codex hilft bei der Weiterentwicklung von SNode.C -- SNode.C trägt wiederum die
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% 12
+% 14
 \begin{frame}{Zwei Oberflächen -- ein Backend}
 \begin{columns}[T]
 \column{0.49\textwidth}
@@ -342,7 +405,7 @@ Codex hilft bei der Weiterentwicklung von SNode.C -- SNode.C trägt wiederum die
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% 13
+% 15
 \begin{frame}{Warum zusätzlich eine Web-Version?}
 \begin{columns}[T]
 \column{0.50\textwidth}
@@ -374,7 +437,7 @@ Der laufende Engineering-Kontext wird \textbf{erreichbar} -- nicht bloß eine ei
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% 14
+% 16
 \begin{frame}{Der unerwartete Schritt: Multi-Client}
 \centering
 \begin{tikzpicture}[
@@ -403,7 +466,7 @@ Der laufende Engineering-Kontext wird \textbf{erreichbar} -- nicht bloß eine ei
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% 15
+% 17
 \begin{frame}{Kollaboration braucht explizite Rollen}
 \begin{columns}[T]
 \column{0.47\textwidth}
@@ -441,7 +504,7 @@ Der laufende Engineering-Kontext wird \textbf{erreichbar} -- nicht bloß eine ei
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% 16
+% 18
 \begin{frame}{Und jetzt wird es für die Lehre interessant}
 \centering
 \begin{tikzpicture}[
@@ -462,7 +525,7 @@ Der laufende Engineering-Kontext wird \textbf{erreichbar} -- nicht bloß eine ei
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% 17
+% 19
 \begin{frame}{Drei mögliche Lehrszenarien}
 \small
 \begin{columns}[T]
@@ -519,7 +582,7 @@ Der laufende Engineering-Kontext wird \textbf{erreichbar} -- nicht bloß eine ei
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% 18
+% 20
 \begin{frame}{Live-Demo: dieselbe Session, zwei Clients}
 \centering
 \begin{tikzpicture}[
@@ -555,7 +618,7 @@ Der laufende Engineering-Kontext wird \textbf{erreichbar} -- nicht bloß eine ei
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% 19
+% 21
 \begin{frame}{Was daraus geworden ist}
 \centering
 \begin{tikzpicture}[font=\small,>=Latex,node distance=0.42cm]
@@ -579,6 +642,43 @@ Der laufende Engineering-Kontext wird \textbf{erreichbar} -- nicht bloß eine ei
 \begin{alertblock}{Schlussgedanke}
 \small Die Lehranwendung war nicht der Ausgangspunkt -- sie ist aus den technischen Eigenschaften des Systems entstanden.
 \end{alertblock}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% 22
+\begin{frame}{Ausblick: vom Workspace zum Orchestrator}
+\centering
+\begin{tikzpicture}[
+  orch/.style={draw,rounded corners,fill=fh-ooe-red!8,minimum width=4.6cm,minimum height=0.95cm,align=center},
+  session/.style={draw,rounded corners,fill=dachslight,minimum width=3.0cm,minimum height=1.25cm,align=center},
+  >=Latex,font=\scriptsize]
+\node[orch] (ui) at (0,2.25) {CodexUI / CodexWUI\\Session-Orchestrierung};
+\node[session] (s1) at (-4.1,-0.15) {Maschine A\\codex-bridge + app-server\\\texttt{CODEX\_HOME A}};
+\node[session] (s2) at (0,-0.15) {Maschine A\\codex-bridge + app-server\\\texttt{CODEX\_HOME B}};
+\node[session] (s3) at (4.1,-0.15) {Maschine B\\codex-bridge + app-server\\\texttt{CODEX\_HOME C}};
+\draw[<->,thick] (ui) -- (s1);
+\draw[<->,thick] (ui) -- (s2);
+\draw[<->,thick] (ui) -- (s3);
+\node[below=0.25cm of s1,text=dachsgray] {eigene History / eigener Kontext};
+\node[below=0.25cm of s2,text=dachsgray] {eigene History / eigener Kontext};
+\node[below=0.25cm of s3,text=dachsgray] {eigene History / eigener Kontext};
+\end{tikzpicture}
+\vspace{0.35em}
+\small
+\begin{columns}[T]
+\column{0.32\textwidth}
+\begin{block}{Unabhängige Sessions}
+Mehrere app-server-Instanzen mit getrennten Context-/History-Verzeichnissen.
+\end{block}
+\column{0.32\textwidth}
+\begin{block}{Verteilte Maschinen}
+Workspaces und Toolchains können dort liegen, wo sie tatsächlich gebraucht werden.
+\end{block}
+\column{0.32\textwidth}
+\begin{block}{Orchestrierung}
+CodexUI/WUI verwaltet Auswahl, Wechsel und perspektivisch Rollen über viele Sessions hinweg.
+\end{block}
+\end{columns}
 \end{frame}
 
 \end{document}
