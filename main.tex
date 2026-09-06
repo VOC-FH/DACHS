@@ -38,6 +38,40 @@ Repository, Compiler, Buildsystem, Tests, Git und Tools sollen \textbf{auf meine
 
 % -----------------------------------------------------------------------------
 % 3
+\begin{frame}{SNode.C in 60 Sekunden}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{block}{General-Purpose Netzwerkframework}
+\begin{itemize}
+  \item C++20, leichtgewichtig, ereignisgetrieben und layer-basiert
+  \item für allgemeine Netzwerk- und verteilte Anwendungen
+  \item besonderer Schwerpunkt: M2M und Internet of Things
+\end{itemize}
+\end{block}
+\begin{block}{Anwendungsprotokolle}
+HTTP/HTTPS, WebSocket/WSS, MQTT und MQTT über WebSocket -- auf einem gemeinsamen Framework-Modell.
+\end{block}
+\column{0.48\textwidth}
+\begin{block}{Multi-Transport}
+\begin{itemize}
+  \item Unix Domain Sockets
+  \item IPv4 und IPv6
+  \item Bluetooth RFCOMM und L2CAP
+  \item unverschlüsselte und TLS-verschlüsselte Stream-Varianten
+\end{itemize}
+\end{block}
+\begin{block}{Konfiguration als Systembestandteil}
+C++-API, Kommandozeile und Konfigurationsdateien greifen auf dasselbe Instanz-/Section-Modell zu.
+\end{block}
+\end{columns}
+\vspace{0.35em}
+\begin{alertblock}{Für diesen Vortrag wichtig}
+SNode.C liefert nicht die KI-Funktionalität, sondern die \textbf{Netzwerk-, Transport- und Konfigurationsbasis}, auf der AISuite aufbaut.
+\end{alertblock}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% 4
 \begin{frame}{Web ist komfortabel -- aber nicht mein Entwicklungsmodell}
 \begin{columns}[T]
 \column{0.48\textwidth}
@@ -69,7 +103,7 @@ Repository, Compiler, Buildsystem, Tests, Git und Tools sollen \textbf{auf meine
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% 4
+% 5
 \begin{frame}{Die CLI löst fast genau dieses Problem}
 \begin{columns}[T]
 \column{0.53\textwidth}
@@ -107,7 +141,7 @@ Ich wollte nicht weniger Codex -- ich wollte \textbf{Codex besser sehen und bedi
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% 5
+% 6
 \begin{frame}{Der entscheidende Baustein: Codex app-server}
 \centering
 \begin{tikzpicture}[
@@ -140,7 +174,7 @@ Der app-server bleibt die \textbf{semantische Autorität}. Genau diese Schnittst
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% 6
+% 7
 \begin{frame}{SNode.C: die vorhandene technische Foundation}
 \begin{columns}[T]
 \column{0.51\textwidth}
@@ -174,7 +208,7 @@ Codex hilft bei der Weiterentwicklung von SNode.C -- SNode.C trägt wiederum die
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% 7
+% 8
 \begin{frame}{AISuite: aus der Schnittstelle wird eine Integrationsschicht}
 \centering
 \begin{tikzpicture}[
@@ -204,7 +238,7 @@ Requests, Responses, Notifications, mehrere Frontends
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% 8
+% 9
 \begin{frame}{Klare Zuständigkeiten statt zweitem Backend}
 \centering
 \begin{tikzpicture}[
@@ -223,7 +257,7 @@ AISuite hält \textbf{keine zweite semantische Kopie} von Threads, Turns oder It
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% 9
+% 10
 \begin{frame}{Die komplette Laufzeitarchitektur}
 \centering
 \begin{tikzpicture}[
@@ -245,7 +279,7 @@ AISuite hält \textbf{keine zweite semantische Kopie} von Threads, Turns oder It
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% 10
+% 11
 \begin{frame}{CodexUI: mein ursprüngliches Ziel}
 \begin{columns}[T]
 \column{0.48\textwidth}
@@ -275,7 +309,7 @@ Native UI und Netzwerkpfad sind bewusst getrennt, teilen aber denselben aktuelle
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% 11
+% 12
 \begin{frame}{Zwei Oberflächen -- ein Backend}
 \begin{columns}[T]
 \column{0.49\textwidth}
@@ -297,7 +331,7 @@ Native UI und Netzwerkpfad sind bewusst getrennt, teilen aber denselben aktuelle
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% 12
+% 13
 \begin{frame}{Warum zusätzlich eine Web-Version?}
 \begin{columns}[T]
 \column{0.50\textwidth}
@@ -328,7 +362,7 @@ Der laufende Engineering-Kontext wird \textbf{erreichbar} -- nicht bloß eine ei
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% 13
+% 14
 \begin{frame}{Der unerwartete Schritt: Multi-Client}
 \centering
 \begin{tikzpicture}[
@@ -357,7 +391,7 @@ Mehrere Frontends können denselben Engineering-Kontext verfolgen.
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% 14
+% 15
 \begin{frame}{Kollaboration braucht explizite Rollen}
 \begin{columns}[T]
 \column{0.47\textwidth}
@@ -394,7 +428,7 @@ Kontrollübergabe wird bewusst vorgenommen; bei Disconnect wird nicht still irge
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% 15
+% 16
 \begin{frame}{Und jetzt wird es für die Lehre interessant}
 \centering
 \begin{tikzpicture}[
@@ -415,7 +449,7 @@ Lehrende und Studierende sehen nicht nur das Ergebnis im Repository, sondern kö
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% 16
+% 17
 \begin{frame}{Drei mögliche Lehrszenarien}
 \begin{columns}[T]
 \column{0.32\textwidth}
@@ -466,7 +500,7 @@ Nicht ``KI als Tutor'' ist hier neu, sondern \textbf{gemeinsam beobachtbare und 
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% 17
+% 18
 \begin{frame}{Live-Demo: dieselbe Session, zwei Clients}
 \centering
 \begin{tikzpicture}[
@@ -501,7 +535,7 @@ Nicht ``KI als Tutor'' ist hier neu, sondern \textbf{gemeinsam beobachtbare und 
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% 18
+% 19
 \begin{frame}{Was daraus geworden ist}
 \centering
 \begin{tikzpicture}[font=\small,>=Latex,node distance=0.42cm]
