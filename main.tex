@@ -306,8 +306,8 @@ Codex hilft bei der Weiterentwicklung von SNode.C -- SNode.C trägt wiederum die
 \node[font=\tiny,text=dachsgray,align=center] at (0,-1.72) {Owned Mode: app-server über stdio gestartet / besessen / überwacht\\extern: Unix / IPv4 / IPv6 WebSocket möglich -- derzeit unverschlüsselt};
 \draw[->,thick] (bridge) -- node[right,font=\scriptsize]{Lifecycle} (server);
 \draw[<->,thick] (server) -- (workspace);
-\node[client] (native) at (-4.7,1.35) {Benutzerrechner\\CodexUI};
-\node[client] (web) at (4.7,1.35) {Benutzerrechner\\CodexWUI};
+\node[client] (native) at (-5.25,1.35) {Benutzerrechner\\CodexUI};
+\node[client] (web) at (5.25,1.35) {Benutzerrechner\\CodexWUI};
 \draw[<->,very thick,fh-ooe-red] (native) -- (bridge);
 \draw[<->,very thick,fh-ooe-red] (web) -- (bridge);
 \end{tikzpicture}
