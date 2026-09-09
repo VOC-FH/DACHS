@@ -2,18 +2,28 @@
 \ifx\fhformat\undefined\def\fhformat{}\fi
 \documentclass[\fhformat,10pt]{style/fh-ooe}
 
+% Wesentliche Projekt- und Komponentenreferenzen
+\newcommand{\SNodeCLink}{\href{https://github.com/SNodeC/snode.c}{SNode.C}}
+\newcommand{\AISuiteLink}{\href{https://github.com/SNodeC/AISuite}{AISuite}}
+\newcommand{\CodexBridgeLink}{\href{https://github.com/SNodeC/AISuite}{\texttt{codex-bridge}}}
+\newcommand{\CodexUILink}{\href{https://github.com/SNodeC/CodexUI}{CodexUI}}
+\newcommand{\CodexWUILink}{\href{https://github.com/SNodeC/CodexUI}{CodexWUI}}
+\newcommand{\CodexLink}{\href{https://github.com/openai/codex}{OpenAI Codex}}
+\newcommand{\MQTTSuiteLink}{\href{https://github.com/SNodeC/mqttsuite}{MQTTSuite}}
+
 \begin{document}
 
 % 1: title page generated automatically by fh-ooe.cls
 
 % -----------------------------------------------------------------------------
 % 2
+\section{Eigentlich wollte ich nur Codex vernünftig verwenden}
 \begin{frame}{Eigentlich wollte ich nur Codex vernünftig verwenden}
 \begin{columns}[T]
 \column{0.46\textwidth}
 \centering
 \begin{tikzpicture}[font=\small,>=Latex]
-\node[draw,rounded corners,fill=dachslight,minimum width=3.2cm,minimum height=0.9cm] (codex) {OpenAI Codex};
+\node[draw,rounded corners,fill=dachslight,minimum width=3.2cm,minimum height=0.9cm] (codex) {\CodexLink};
 \node[below left=0.9cm and -0.1cm of codex] (web) {Web};
 \node[below=0.9cm of codex] (cli) {CLI};
 \node[below right=0.9cm and -0.1cm of codex] (ide) {VS Code / JetBrains};
@@ -24,9 +34,9 @@
 \column{0.50\textwidth}
 \begin{block}{Mein Ausgangspunkt}
 \begin{itemize}
-  \item Ich entwickle SNode.C aktiv weiter.
+  \item Seit rund sieben Jahren entwickle ich ein eigenes C++-Netzwerkframework.
   \item Dafür möchte ich Codex direkt im realen lokalen Workspace einsetzen.
-  \item Ich verwende weder VS Code noch JetBrains.
+  \item Meine Entwicklungsumgebung ist \textbf{Qt Creator} -- nicht VS Code oder JetBrains.
 \end{itemize}
 \end{block}
 \vspace{0.25em}
@@ -38,19 +48,20 @@ Repository, Compiler, Buildsystem, Tests, Git und Tools sollen \textbf{auf meine
 
 % -----------------------------------------------------------------------------
 % 3
-\begin{frame}{SNode.C in 60 Sekunden}
+\section{Das Netzwerkframework SNode.C in 60 Sekunden}
+\begin{frame}{Das Netzwerkframework SNode.C in 60 Sekunden}
 \small
 \begin{columns}[T]
 \column{0.48\textwidth}
 \begin{block}{General-Purpose Netzwerkframework}
 \begin{itemize}
-  \item C++20, leichtgewichtig, ereignisgetrieben und layer-basiert
+  \item \SNodeCLink: C++20, leichtgewichtig, ereignisgetrieben und layer-basiert
   \item für allgemeine Netzwerk- und verteilte Anwendungen
   \item besonderer Schwerpunkt: M2M und Internet of Things
 \end{itemize}
 \end{block}
 \begin{block}{Anwendungsprotokolle}
-HTTP/HTTPS, WebSocket/WSS, MQTT und MQTT über WebSocket -- auf einem gemeinsamen Framework-Modell.
+HTTP/HTTPS mit \textbf{Express-like API}, WebSocket/WSS, MQTT und MQTT über WebSocket -- auf einem gemeinsamen Framework-Modell.
 \end{block}
 \column{0.48\textwidth}
 \begin{block}{Multi-Transport}
@@ -67,12 +78,13 @@ C++-API, Kommandozeile und Konfigurationsdateien greifen auf dasselbe Instanz-/S
 \end{columns}
 \vspace{0.15em}
 \begin{alertblock}{Für diesen Vortrag wichtig}
-SNode.C liefert nicht die KI-Funktionalität, sondern die \textbf{Netzwerk-, Transport- und Konfigurationsbasis}, auf der AISuite aufbaut.
+\SNodeCLink liefert nicht die KI-Funktionalität, sondern die \textbf{Netzwerk-, Transport- und Konfigurationsbasis}, auf der \AISuiteLink aufbaut.
 \end{alertblock}
 \end{frame}
 
 % -----------------------------------------------------------------------------
 % 4
+\section{Web ist komfortabel -- aber nicht mein Entwicklungsmodell}
 \begin{frame}{Web ist komfortabel -- aber nicht mein Entwicklungsmodell}
 \begin{columns}[T]
 \column{0.48\textwidth}
@@ -105,6 +117,7 @@ SNode.C liefert nicht die KI-Funktionalität, sondern die \textbf{Netzwerk-, Tra
 
 % -----------------------------------------------------------------------------
 % 5
+\section{Die CLI löst fast genau dieses Problem}
 \begin{frame}{Die CLI löst fast genau dieses Problem}
 \begin{columns}[T]
 \column{0.52\textwidth}
@@ -146,6 +159,7 @@ SNode.C liefert nicht die KI-Funktionalität, sondern die \textbf{Netzwerk-, Tra
 
 % -----------------------------------------------------------------------------
 % 6
+\section{Der entscheidende Baustein: Codex app-server}
 \begin{frame}{Der entscheidende Baustein: Codex app-server}
 \centering
 \begin{tikzpicture}[
@@ -156,7 +170,7 @@ SNode.C liefert nicht die KI-Funktionalität, sondern die \textbf{Netzwerk-, Tra
 \node[box] (vscode) at (-1.45,1.45) {VS Code};
 \node[box] (jb) at (1.45,1.45) {JetBrains};
 \node[box] (custom) at (4.35,1.45) {eigene Clients};
-\node[core] (server) at (0,-0.05) {Codex app-server\\strukturierte Schnittstelle};
+\node[core] (server) at (0,-0.05) {\href{https://github.com/openai/codex}{Codex app-server}\\strukturierte Schnittstelle};
 \node[core,minimum width=2.5cm] (codex) at (0,-1.55) {Codex};
 \foreach \x in {cli,vscode,jb,custom} \draw[->,thick] (\x) -- (server);
 \draw[<->,very thick,fh-ooe-red] (server) -- (codex);
@@ -181,13 +195,14 @@ Der app-server bleibt die \textbf{semantische Autorität}. Genau diese Schnittst
 
 % -----------------------------------------------------------------------------
 % 7
+\section{AISuite: aus der Schnittstelle wird eine Integrationsschicht}
 \begin{frame}{AISuite: aus der Schnittstelle wird eine Integrationsschicht}
 \centering
 \begin{tikzpicture}[
   box/.style={draw,rounded corners,minimum height=0.82cm,align=center,fill=dachslight},
   >=Latex,font=\small]
-\node[box,minimum width=7.4cm] (front) at (0,2.0) {CodexUI / CodexWUI / weitere Clients};
-\node[box,minimum width=7.4cm,fill=fh-ooe-red!8] (bridge) at (0,0.45) {AISuite / \texttt{codex-bridge}};
+\node[box,minimum width=7.4cm] (front) at (0,2.0) {\CodexUILink / \CodexWUILink / weitere Clients};
+\node[box,minimum width=7.4cm,fill=fh-ooe-red!8] (bridge) at (0,0.45) {\AISuiteLink / \CodexBridgeLink};
 \node[box,minimum width=4.3cm] (server) at (0,-1.15) {Codex app-server};
 \draw[<->,very thick] (front) -- node[right]{Frontend-Protokoll} (bridge);
 \draw[<->,very thick,fh-ooe-red] (bridge) -- node[right]{natives JSON-RPC} (server);
@@ -212,15 +227,16 @@ Requests, Responses, Notifications, mehrere Frontends
 
 % -----------------------------------------------------------------------------
 % 8
+\section{SNode.C: die vorhandene technische Foundation}
 \begin{frame}{SNode.C: die vorhandene technische Foundation}
 \begin{columns}[T]
 \column{0.51\textwidth}
 \centering
 \begin{tikzpicture}[font=\small,>=Latex]
-\node[draw,rounded corners,fill=fh-ooe-red!8,minimum width=4.5cm,minimum height=0.75cm] (app) {AISuite / codex-bridge};
+\node[draw,rounded corners,fill=fh-ooe-red!8,minimum width=4.5cm,minimum height=0.75cm] (app) {\AISuiteLink / \CodexBridgeLink};
 \node[draw,rounded corners,fill=dachslight,minimum width=4.5cm,minimum height=0.75cm,below=0.42cm of app] (proto) {HTTP / WebSocket / TLS};
 \node[draw,rounded corners,fill=dachslight,minimum width=4.5cm,minimum height=0.75cm,below=0.42cm of proto] (net) {Unix / IPv4 / IPv6};
-\node[draw,rounded corners,fill=dachslight,minimum width=4.5cm,minimum height=0.75cm,below=0.42cm of net] (core) {SNode.C -- event-driven C++20};
+\node[draw,rounded corners,fill=dachslight,minimum width=4.5cm,minimum height=0.75cm,below=0.42cm of net] (core) {\SNodeCLink -- event-driven C++20};
 \draw[->,thick] (core) -- (net);
 \draw[->,thick] (net) -- (proto);
 \draw[->,thick] (proto) -- (app);
@@ -247,14 +263,15 @@ Codex hilft bei der Weiterentwicklung von SNode.C -- SNode.C trägt wiederum die
 
 % -----------------------------------------------------------------------------
 % 9
+\section{Klare Zuständigkeiten statt zweitem Backend}
 \begin{frame}{Klare Zuständigkeiten statt zweitem Backend}
 \centering
 \begin{tikzpicture}[
   layer/.style={draw,rounded corners,minimum width=10.0cm,minimum height=1.0cm,align=center},
   >=Latex,font=\small]
 \node[layer,fill=fh-ooe-red!8] (server) at (0,1.85) {\textbf{Codex app-server}\\Threads · Turns · Items · semantischer Zustand};
-\node[layer,fill=dachslight] (bridge) at (0,0.25) {\textbf{AISuite / codex-bridge}\\Transport · Routing · Verbindungs- und Request-Korrelation};
-\node[layer,fill=white] (ui) at (0,-1.35) {\textbf{CodexUI / CodexWUI}\\Darstellung · Interaktion · lokale UI-Mechanik};
+\node[layer,fill=dachslight] (bridge) at (0,0.25) {\textbf{\AISuiteLink / codex-bridge}\\Transport · Routing · Verbindungs- und Request-Korrelation};
+\node[layer,fill=white] (ui) at (0,-1.35) {\textbf{\CodexUILink / \CodexWUILink}\\Darstellung · Interaktion · lokale UI-Mechanik};
 \draw[<->,thick] (server) -- (bridge);
 \draw[<->,thick] (bridge) -- (ui);
 \end{tikzpicture}
@@ -266,6 +283,7 @@ Codex hilft bei der Weiterentwicklung von SNode.C -- SNode.C trägt wiederum die
 
 % -----------------------------------------------------------------------------
 % 10
+\section{Die komplette Laufzeitarchitektur}
 \begin{frame}{Die komplette Laufzeitarchitektur}
 \centering
 \begin{tikzpicture}[
@@ -291,6 +309,7 @@ Codex hilft bei der Weiterentwicklung von SNode.C -- SNode.C trägt wiederum die
 
 % -----------------------------------------------------------------------------
 % 11
+\section{Deployment: Rechenleistung dort, wo entwickelt wird}
 \begin{frame}{Deployment: Rechenleistung dort, wo entwickelt wird}
 \centering
 \begin{tikzpicture}[
@@ -319,6 +338,7 @@ Codex hilft bei der Weiterentwicklung von SNode.C -- SNode.C trägt wiederum die
 
 % -----------------------------------------------------------------------------
 % 12
+\section{Zugänge, Provider-Pfad und Plattformstatus}
 \begin{frame}{Zugänge, Provider-Pfad und Plattformstatus}
 \scriptsize
 \begin{columns}[T]
@@ -343,11 +363,11 @@ Codex hilft bei der Weiterentwicklung von SNode.C -- SNode.C trägt wiederum die
   \item stdio im lokalen owned mode
   \item Unix Domain Socket
   \item IPv4 / IPv6 über WebSocket
-  \item \textbf{Provider-Pfad derzeit unverschlüsselt}
+  \item \textbf{Der app-server bietet auf diesem Provider-Pfad derzeit kein TLS an.}
 \end{itemize}
 \end{block}
-\begin{alertblock}{Empfehlung}
-Bridge und app-server möglichst auf derselben vertrauenswürdigen Maschine betreiben. Eine Trennung über untrusted Networks ist ohne zusätzliche Absicherung \textbf{nicht empfehlenswert}.
+\begin{alertblock}{Einordnung}
+Die fehlende Verschlüsselung ist damit \textbf{keine Unzulänglichkeit von codex-bridge}. Bridge und app-server möglichst auf derselben vertrauenswürdigen Maschine betreiben; Remote-Trennung über untrusted Networks ohne zusätzliche Absicherung nicht empfehlenswert.
 \end{alertblock}
 \begin{block}{Stand heute}
 Die nativen Binaries \texttt{codex-bridge} und CodexUI existieren derzeit für \textbf{Linux}; CodexWUI ist browserbasiert.
@@ -357,12 +377,13 @@ Die nativen Binaries \texttt{codex-bridge} und CodexUI existieren derzeit für \
 
 % -----------------------------------------------------------------------------
 % 13
+\section{CodexUI: mein ursprüngliches Ziel}
 \begin{frame}{CodexUI: mein ursprüngliches Ziel}
 \begin{columns}[T]
 \column{0.48\textwidth}
 \begin{block}{Native Arbeitsoberfläche}
 \begin{itemize}
-  \item Qt 6 Widgets
+  \item \CodexUILink auf Basis von Qt 6 Widgets
   \item für den lokalen Desktop-Workflow
   \item Threads und Turns explizit navigierbar
   \item Tool- und Shell-Aktivität sichtbar
@@ -377,8 +398,9 @@ Die nativen Binaries \texttt{codex-bridge} und CodexUI existieren derzeit für \
 \node[draw,rounded corners,fill=fh-ooe-red!8,minimum width=4.0cm,minimum height=0.95cm,below=0.62cm of q] (net) {SNode.C Client Thread};
 \draw[<->,thick] (qt) -- (q);
 \draw[<->,thick] (q) -- (net);
+\node[draw,rounded corners,fit=(qt)(q)(net),inner sep=0.28cm,label={[font=\small\bfseries]above:CodexUI}] {};
 \end{tikzpicture}
-\vspace{0.4em}
+\vspace{0.25em}
 \begin{block}{Kein WebView-Wrapper}
 \small Native UI und Netzwerkpfad sind bewusst getrennt, teilen aber denselben aktuellen Arbeitszustand.
 \end{block}
@@ -387,6 +409,7 @@ Die nativen Binaries \texttt{codex-bridge} und CodexUI existieren derzeit für \
 
 % -----------------------------------------------------------------------------
 % 14
+\section{Zwei Oberflächen -- ein Backend}
 \begin{frame}{Zwei Oberflächen -- ein Backend}
 \begin{columns}[T]
 \column{0.49\textwidth}
@@ -409,6 +432,7 @@ Die nativen Binaries \texttt{codex-bridge} und CodexUI existieren derzeit für \
 
 % -----------------------------------------------------------------------------
 % 15
+\section{Warum zusätzlich eine Web-Version?}
 \begin{frame}{Warum zusätzlich eine Web-Version?}
 \begin{columns}[T]
 \column{0.50\textwidth}
@@ -441,6 +465,7 @@ Der laufende Engineering-Kontext wird \textbf{erreichbar} -- nicht bloß eine ei
 
 % -----------------------------------------------------------------------------
 % 16
+\section{Der unerwartete Schritt: Multi-Client}
 \begin{frame}{Der unerwartete Schritt: Multi-Client}
 \centering
 \begin{tikzpicture}[
@@ -470,6 +495,7 @@ Der laufende Engineering-Kontext wird \textbf{erreichbar} -- nicht bloß eine ei
 
 % -----------------------------------------------------------------------------
 % 17
+\section{Kollaboration braucht explizite Rollen}
 \begin{frame}{Kollaboration braucht explizite Rollen}
 \begin{columns}[T]
 \column{0.47\textwidth}
@@ -508,6 +534,7 @@ Der laufende Engineering-Kontext wird \textbf{erreichbar} -- nicht bloß eine ei
 
 % -----------------------------------------------------------------------------
 % 18
+\section{Und jetzt wird es für die Lehre interessant}
 \begin{frame}{Und jetzt wird es für die Lehre interessant}
 \centering
 \begin{tikzpicture}[
@@ -529,6 +556,7 @@ Der laufende Engineering-Kontext wird \textbf{erreichbar} -- nicht bloß eine ei
 
 % -----------------------------------------------------------------------------
 % 19
+\section{Drei mögliche Lehrszenarien}
 \begin{frame}{Drei mögliche Lehrszenarien}
 \small
 \begin{columns}[T]
@@ -536,13 +564,14 @@ Der laufende Engineering-Kontext wird \textbf{erreichbar} -- nicht bloß eine ei
 \centering
 \textbf{A -- Gemeinsame Session}\\[0.3em]
 \begin{tikzpicture}[font=\scriptsize,>=Latex]
+\path[use as bounding box] (-1.7,-1.25) rectangle (1.7,1.55);
 \node[draw,circle] (l) at (0,1.25) {L};
 \node[draw,circle] (s1) at (-1.05,0.15) {S1};
 \node[draw,circle] (s2) at (1.05,0.15) {S2};
 \node[draw,rounded corners,fill=dachslight,minimum width=2.5cm] (b) at (0,-1.0) {eine Session};
 \foreach \x in {l,s1,s2} \draw[<->] (\x) -- (b);
 \end{tikzpicture}
-\\[-0.1em]
+\\[0.05em]
 \scriptsize Debugging, Architektur, Review
 
 \column{0.34\textwidth}
@@ -550,6 +579,7 @@ Der laufende Engineering-Kontext wird \textbf{erreichbar} -- nicht bloß eine ei
 \textbf{B -- Individuelle Sessions}\\[0.3em]
 \begin{tikzpicture}[font=\tiny,>=Latex,
   session/.style={draw,rounded corners,fill=dachslight,minimum width=1.3cm,minimum height=1.05cm,align=center}]
+\path[use as bounding box] (-1.7,-1.25) rectangle (1.7,1.55);
 \node[draw,circle] (l) at (0,1.35) {L};
 \node[session] (s1) at (-1.35,-0.35) {S1\\eigene\\Session};
 \node[session,fill=fh-ooe-red!8] (s2) at (0,-0.35) {S2\\eigene\\Session};
@@ -565,6 +595,7 @@ Der laufende Engineering-Kontext wird \textbf{erreichbar} -- nicht bloß eine ei
 \centering
 \textbf{C -- Rollenwechsel}\\[0.3em]
 \begin{tikzpicture}[font=\scriptsize,>=Latex]
+\path[use as bounding box] (-1.7,-1.25) rectangle (1.7,1.55);
 \node[draw,rounded corners,fill=dachslight] (a) at (-1.15,0.8) {A};
 \node[draw,rounded corners,fill=dachslight] (b) at (1.15,0.8) {B};
 \node[draw,rounded corners,fill=fh-ooe-red!8,minimum width=2.45cm] (w) at (0,-0.75) {gemeinsamer Kontext};
@@ -586,6 +617,7 @@ Der laufende Engineering-Kontext wird \textbf{erreichbar} -- nicht bloß eine ei
 
 % -----------------------------------------------------------------------------
 % 20
+\section{Live-Demo: dieselbe Session, zwei Clients}
 \begin{frame}{Live-Demo: dieselbe Session, zwei Clients}
 \centering
 \begin{tikzpicture}[
@@ -622,6 +654,7 @@ Der laufende Engineering-Kontext wird \textbf{erreichbar} -- nicht bloß eine ei
 
 % -----------------------------------------------------------------------------
 % 21
+\section{Was daraus geworden ist}
 \begin{frame}{Was daraus geworden ist}
 \centering
 \begin{tikzpicture}[font=\small,>=Latex,node distance=0.42cm]
@@ -657,6 +690,43 @@ Der laufende Engineering-Kontext wird \textbf{erreichbar} -- nicht bloß eine ei
 
 % -----------------------------------------------------------------------------
 % 22
+\section{Ausblick: weitere KI-Provider für AISuite}
+\begin{frame}{Ausblick: weitere KI-Provider für AISuite}
+\centering
+\begin{tikzpicture}[
+  box/.style={draw,rounded corners,minimum height=0.85cm,align=center,fill=dachslight},
+  provider/.style={draw,dashed,rounded corners,minimum width=3.0cm,minimum height=1.0cm,align=center,fill=white},
+  >=Latex,font=\small]
+\node[box,minimum width=7.2cm] (front) at (0,2.0) {CodexUI / CodexWUI / weitere Clients};
+\node[box,fill=fh-ooe-red!8,minimum width=7.2cm] (suite) at (0,0.55) {AISuite\\gemeinsame Integrations- und Transportebene};
+\node[provider] (codex) at (-4.0,-1.35) {OpenAI Codex\\app-server};
+\node[provider] (claude) at (0,-1.35) {Claude Code\\Provider-Adapter};
+\node[provider] (future) at (4.0,-1.35) {weitere KI-Provider\\perspektivisch};
+\draw[<->,thick] (front) -- (suite);
+\draw[<->,thick] (suite) -- (codex);
+\draw[<->,thick] (suite) -- (claude);
+\draw[<->,thick] (suite) -- (future);
+\end{tikzpicture}
+\vspace{0.35em}
+\small
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{block}{Ziel}
+Provider-spezifische Protokolle und Lebenszyklen werden hinter einer gemeinsamen AISuite-Abstraktion gekapselt.
+\end{block}
+\column{0.48\textwidth}
+\begin{block}{Konsequenz}
+Frontend-, Transport- und Kollaborationskonzepte sollen auch mit anderen Coding-Agents wiederverwendbar bleiben.
+\end{block}
+\end{columns}
+\begin{center}
+\scriptsize Claude Code und weitere Provider sind hier ausdrücklich \textbf{Ausblick}, nicht aktueller Implementierungsstand.
+\end{center}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% 23
+\section{Ausblick: vom Workspace zum Orchestrator}
 \begin{frame}{Ausblick: vom Workspace zum Orchestrator}
 \centering
 \begin{tikzpicture}[
@@ -690,6 +760,37 @@ Workspaces und Toolchains können dort liegen, wo sie tatsächlich gebraucht wer
 CodexUI/WUI verwaltet Auswahl, Wechsel und perspektivisch Rollen über viele Sessions hinweg.
 \end{block}
 \end{columns}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% 24
+\section{Referenzen und Projekte}
+\begin{frame}{Referenzen und Projekte}
+\small
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{block}{\SNodeCLink}
+General-Purpose, event-driven C++20-Netzwerkframework und technische Basis für die in diesem Vortrag gezeigte Integration.\\[0.25em]
+\href{https://github.com/SNodeC/snode.c}{\texttt{github.com/SNodeC/snode.c}}
+\end{block}
+\begin{block}{\AISuiteLink}
+AI-Integrationsschicht mit \texttt{codex-bridge}, Provider-Anbindung, Transport, Routing und Multi-Client-Unterstützung.\\[0.25em]
+\href{https://github.com/SNodeC/AISuite}{\texttt{github.com/SNodeC/AISuite}}
+\end{block}
+\column{0.48\textwidth}
+\begin{block}{\CodexUILink / \CodexWUILink}
+Native Qt-6- und browserbasierte Frontends für AISuite und Codex app-server -- inklusive der kollaborativen Client-Mechanismen.\\[0.25em]
+\href{https://github.com/SNodeC/CodexUI}{\texttt{github.com/SNodeC/CodexUI}}
+\end{block}
+\begin{block}{\MQTTSuiteLink}
+Weiteres umfangreiches SNode.C-Referenzprojekt für MQTT-basierte Anwendungen und damit ein unabhängiger Praxisnachweis des Frameworks.\\[0.25em]
+\href{https://github.com/SNodeC/mqttsuite}{\texttt{github.com/SNodeC/mqttsuite}}
+\end{block}
+\end{columns}
+\vspace{0.15em}
+\begin{center}
+\scriptsize OpenAI Codex / app-server: \href{https://github.com/openai/codex}{\texttt{github.com/openai/codex}}
+\end{center}
 \end{frame}
 
 \end{document}
