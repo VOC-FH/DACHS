@@ -2,6 +2,8 @@
 \ifx\fhformat\undefined\def\fhformat{}\fi
 \documentclass[\fhformat,10pt]{style/fh-ooe}
 
+\usepackage{bookmark}
+
 % Wesentliche Projekt- und Komponentenreferenzen
 \newcommand{\SNodeCLink}{\href{https://github.com/SNodeC/snode.c}{SNode.C}}
 \newcommand{\AISuiteLink}{\href{https://github.com/SNodeC/AISuite}{AISuite}}
@@ -36,7 +38,7 @@
 \begin{itemize}
   \item Seit rund sieben Jahren entwickle ich ein eigenes C++-Netzwerkframework.
   \item Dafür möchte ich Codex direkt im realen lokalen Workspace einsetzen.
-  \item Meine Entwicklungsumgebung ist \textbf{Qt Creator} -- nicht VS Code oder JetBrains.
+  \item Meine Entwicklungsumgebungen sind \textbf{Qt Creator} und \textbf{KDevelop}-- nicht VS Code oder JetBrains.
 \end{itemize}
 \end{block}
 \vspace{0.25em}
@@ -61,7 +63,7 @@ Repository, Compiler, Buildsystem, Tests, Git und Tools sollen \textbf{auf meine
 \end{itemize}
 \end{block}
 \begin{block}{Anwendungsprotokolle}
-HTTP/HTTPS mit \textbf{Express-like API}, WebSocket/WSS, MQTT und MQTT über WebSocket -- auf einem gemeinsamen Framework-Modell.
+HTTP/HTTPS mit Express-like API, WebSocket/WSS, MQTT und MQTT über WebSocket -- auf einem gemeinsamen Framework-Modell.
 \end{block}
 \column{0.48\textwidth}
 \begin{block}{Multi-Transport}
@@ -699,7 +701,7 @@ Der laufende Engineering-Kontext wird \textbf{erreichbar} -- nicht bloß eine ei
   >=Latex,font=\small]
 \node[box,minimum width=7.2cm] (front) at (0,2.0) {CodexUI / CodexWUI / weitere Clients};
 \node[box,fill=fh-ooe-red!8,minimum width=7.2cm] (suite) at (0,0.55) {AISuite\\gemeinsame Integrations- und Transportebene};
-\node[provider] (codex) at (-4.0,-1.35) {OpenAI Codex\\app-server};
+\node[provider,solid] (codex) at (-4.0,-1.35) {OpenAI Codex\\app-server};
 \node[provider] (claude) at (0,-1.35) {Claude Code\\Provider-Adapter};
 \node[provider] (future) at (4.0,-1.35) {weitere KI-Provider\\perspektivisch};
 \draw[<->,thick] (front) -- (suite);

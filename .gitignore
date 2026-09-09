@@ -9,3 +9,7 @@
 *.fdb_latexmk
 *.synctex.gz
 main.pdf
+/.kile/codex(w)ui-talk.kilepr.gui
+/Kollaborative_KI-gestützte_Softwareentwicklung_in_der_Lehre.pdf
+/codex(w)ui-talk.kilepr
+/main.staged
