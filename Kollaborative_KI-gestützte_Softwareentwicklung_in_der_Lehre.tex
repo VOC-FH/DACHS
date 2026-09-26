@@ -81,7 +81,7 @@ C++-API, Kommandozeile und Konfigurationsdateien greifen auf dasselbe Instanz-/S
 \end{columns}
 \vspace{0.15em}
 \begin{alertblock}{Für diesen Vortrag wichtig}
-\SNodeCLink liefert nicht die KI-Funktionalität, sondern die \textbf{Netzwerk-, Transport- und Konfigurationsbasis}, auf der \AISuiteLink aufbaut.
+\SNodeCLink{} liefert nicht die KI-Funktionalität, sondern die \textbf{Netzwerk-, Transport- und Konfigurationsbasis}, auf der \AISuiteLink aufbaut.
 \end{alertblock}
 \end{frame}
 
@@ -184,7 +184,7 @@ C++-API, Kommandozeile und Konfigurationsdateien greifen auf dasselbe Instanz-/S
 \begin{columns}[T]
 \column{0.48\textwidth}
 \begin{block}{Explizite Arbeitsobjekte}
-Threads, Turns, Items, History, Status, Interrupt / Resume
+Threads, Turns, Items, History, Status, Interrupt/Resume
 \end{block}
 \column{0.48\textwidth}
 \begin{block}{Explizite Aktionen}
@@ -205,8 +205,8 @@ Der app-server bleibt die \textbf{semantische Autorität}. Genau diese Schnittst
 \begin{tikzpicture}[
   box/.style={draw,rounded corners,minimum height=0.82cm,align=center,fill=dachslight},
   >=Latex,font=\small]
-\node[box,minimum width=7.4cm] (front) at (0,2.0) {\CodexUILink / \CodexWUILink / weitere Clients};
-\node[box,minimum width=7.4cm,fill=fh-ooe-red!8] (bridge) at (0,0.45) {\AISuiteLink / \CodexBridgeLink};
+\node[box,minimum width=7.4cm] (front) at (0,2.0) {\CodexUILink{} / \CodexWUILink{} / weitere Clients};
+\node[box,minimum width=7.4cm,fill=fh-ooe-red!8] (bridge) at (0,0.45) {\AISuiteLink{} / \CodexBridgeLink};
 \node[box,minimum width=4.3cm] (server) at (0,-1.15) {Codex app-server};
 \draw[<->,very thick] (front) -- node[right]{Frontend-Protokoll} (bridge);
 \draw[<->,very thick,fh-ooe-red] (bridge) -- node[right]{natives JSON-RPC} (server);
@@ -237,10 +237,10 @@ Requests, Responses, Notifications, mehrere Frontends
 \column{0.51\textwidth}
 \centering
 \begin{tikzpicture}[font=\small,>=Latex]
-\node[draw,rounded corners,fill=fh-ooe-red!8,minimum width=4.5cm,minimum height=0.75cm] (app) {\AISuiteLink / \CodexBridgeLink};
+\node[draw,rounded corners,fill=fh-ooe-red!8,minimum width=4.5cm,minimum height=0.75cm] (app) {\AISuiteLink{} / \CodexBridgeLink};
 \node[draw,rounded corners,fill=dachslight,minimum width=4.5cm,minimum height=0.75cm,below=0.42cm of app] (proto) {HTTP / WebSocket / TLS};
 \node[draw,rounded corners,fill=dachslight,minimum width=4.5cm,minimum height=0.75cm,below=0.42cm of proto] (net) {Unix / IPv4 / IPv6};
-\node[draw,rounded corners,fill=dachslight,minimum width=4.5cm,minimum height=0.75cm,below=0.42cm of net] (core) {\SNodeCLink -- event-driven C++20};
+\node[draw,rounded corners,fill=dachslight,minimum width=4.5cm,minimum height=0.75cm,below=0.42cm of net] (core) {\SNodeCLink{} -- event-driven C++20};
 \draw[->,thick] (core) -- (net);
 \draw[->,thick] (net) -- (proto);
 \draw[->,thick] (proto) -- (app);
@@ -274,8 +274,8 @@ Codex hilft bei der Weiterentwicklung von SNode.C -- SNode.C trägt wiederum die
   layer/.style={draw,rounded corners,minimum width=10.0cm,minimum height=1.0cm,align=center},
   >=Latex,font=\small]
 \node[layer,fill=fh-ooe-red!8] (server) at (0,1.85) {\textbf{Codex app-server}\\Threads · Turns · Items · semantischer Zustand};
-\node[layer,fill=dachslight] (bridge) at (0,0.25) {\textbf{\AISuiteLink / codex-bridge}\\Transport · Routing · Verbindungs- und Request-Korrelation};
-\node[layer,fill=white] (ui) at (0,-1.35) {\textbf{\CodexUILink / \CodexWUILink}\\Darstellung · Interaktion · lokale UI-Mechanik};
+\node[layer,fill=dachslight] (bridge) at (0,0.25) {\textbf{\AISuiteLink{} / codex-bridge}\\Transport · Routing · Verbindungs- und Request-Korrelation};
+\node[layer,fill=white] (ui) at (0,-1.35) {\textbf{\CodexUILink{} / \CodexWUILink}\\Darstellung · Interaktion · lokale UI-Mechanik};
 \draw[<->,thick] (server) -- (bridge);
 \draw[<->,thick] (bridge) -- (ui);
 \end{tikzpicture}
@@ -783,9 +783,9 @@ CodexUI/WUI verwaltet Auswahl, Wechsel und perspektivisch Rollen über viele Ses
         \href{https://github.com/openai/codex}{\texttt{github.com/openai/codex}}
   \item \textbf{\SNodeCLink} -- General-Purpose, event-driven C++20-Netzwerkframework und technische Basis der gezeigten Integration.\\[-0.05em]
         \href{https://github.com/SNodeC/snode.c}{\texttt{github.com/SNodeC/snode.c}}
-  \item \textbf{\AISuiteLink / \CodexBridgeLink} -- AI-Integrationsschicht mit Provider-Anbindung, Transport, Routing und Multi-Client-Unterstützung.\\[-0.05em]
+  \item \textbf{\AISuiteLink{} / \CodexBridgeLink} -- AI-Integrationsschicht mit Provider-Anbindung, Transport, Routing und Multi-Client-Unterstützung.\\[-0.05em]
         \href{https://github.com/SNodeC/AISuite}{\texttt{github.com/SNodeC/AISuite}}
-  \item \textbf{\CodexUILink / \CodexWUILink} -- native Qt-6- und browserbasierte Frontends für AISuite und Codex app-server.\\[-0.05em]
+  \item \textbf{\CodexUILink{} / \CodexWUILink} -- native Qt-6- und browserbasierte Frontends für AISuite und Codex app-server.\\[-0.05em]
         \href{https://github.com/SNodeC/CodexUI}{\texttt{github.com/SNodeC/CodexUI}}
   \item \textbf{\MQTTSuiteLink} -- weiteres umfangreiches SNode.C-Referenzprojekt für MQTT-basierte Anwendungen.\\[-0.05em]
         \href{https://github.com/SNodeC/mqttsuite}{\texttt{github.com/SNodeC/mqttsuite}}
